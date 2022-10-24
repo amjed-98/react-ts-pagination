@@ -14,6 +14,8 @@ type Props = {
   pageClass?: string;
   activePageClass?: string;
   paginationContainerClass?: string;
+  pagesContainerClass?: string;
+  arrowsBtnClass?: string;
 };
 
 const Pagination: FC<Props> = (props) => {
@@ -23,7 +25,9 @@ const Pagination: FC<Props> = (props) => {
     activePageClass,
     activePageStyle,
     pageClass,
-    paginationContainerClass = '',
+    paginationContainerClass,
+    pagesContainerClass,
+    arrowsBtnClass,
     onPageChange,
     PrevArrow = '❮',
     NextArrow = '❯',
@@ -37,6 +41,10 @@ const Pagination: FC<Props> = (props) => {
         ? currentPageNumber - 1
         : action;
 
+    /*
+    ? if you pass your own onPageChange handler function then will use it
+    ? else will use the default handler that is in usePagination hook
+    */
     if (onPageChange) onPageChange(pageNumber);
     else dispatchEvent('pageChange', pageNumber);
   };
@@ -47,12 +55,12 @@ const Pagination: FC<Props> = (props) => {
     target.scrollLeft += e.deltaY * 2;
   };
 
-  const classes = `pagination ${paginationContainerClass}`.trim();
+  const classes = paginationContainerClass || 'pagination';
   return (
     <div className={classes} onWheel={handleMouseWheelScroll}>
       <Button
         Label={PrevArrow}
-        className={'btn prev-btn'}
+        className={arrowsBtnClass || 'btn prev-btn'}
         onClick={handlePageChange.bind(null, 'prev')}
       />
 
@@ -63,11 +71,12 @@ const Pagination: FC<Props> = (props) => {
         pageClass={pageClass}
         activePageClass={activePageClass}
         handlePageChange={handlePageChange}
+        pagesContainerClass={pagesContainerClass}
       />
 
       <Button
         Label={NextArrow}
-        className={'btn next-btn'}
+        className={arrowsBtnClass || 'btn next-btn'}
         onClick={handlePageChange.bind(null, 'next')}
       />
     </div>

@@ -1,14 +1,15 @@
 import { memo, useEffect, useMemo, useRef, type FC } from 'react';
-import { listenFor, scrollToPageNumber, unSubscribe } from '@/lib/utils';
+import { listenFor, scrollToPageNumber } from '@/lib/utils';
 import PageNumber from './PageNumber';
 
 type Props = {
   numberOfPages: number;
   currentPageNumber: number;
+  handlePageChange: (pageNumber: number) => void;
   activePageStyle?: { color: Color; backgroundColor: BgColor };
   activePageClass?: string;
+  pagesContainerClass?: string;
   pageClass?: string;
-  handlePageChange: (pageNumber: number) => void;
 };
 
 const Pages: FC<Props> = (props) => {
@@ -19,6 +20,7 @@ const Pages: FC<Props> = (props) => {
     activePageClass,
     activePageStyle,
     handlePageChange,
+    pagesContainerClass,
   } = props;
   const pagesRef = useRef<HTMLDivElement>(null);
 
@@ -55,18 +57,15 @@ const Pages: FC<Props> = (props) => {
     });
   }, [currentPageNumber]);
 
-  const handleScrollToPageNumber = ({ detail: pageNumber }: CustomEvent): void => {
+  const handleScrollToPageNumber = ({ detail: pageNumber }: CustomEvent<number>): void => {
     scrollToPageNumber(pagesRef, pageNumber);
   };
 
-  useEffect(() => {
-    listenFor('pageChange', handleScrollToPageNumber);
+  useEffect(listenFor('pageChange', handleScrollToPageNumber), []);
 
-    return () => unSubscribe('pageChange', handleScrollToPageNumber);
-  }, []);
-
+  const className = pagesContainerClass || 'pagination';
   return (
-    <div className='pages' ref={pagesRef}>
+    <div className={className} ref={pagesRef}>
       {pages.map((page) => (
         <PageNumber
           key={page.pageNumber}
