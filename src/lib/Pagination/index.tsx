@@ -1,4 +1,4 @@
-import { type FC, type JSXElementConstructor, type WheelEvent, memo } from 'react';
+import { type FC, type JSXElementConstructor, type WheelEvent } from 'react';
 import { dispatchEvent } from '@/lib/utils';
 import Button from './components/Button';
 import Pages from './components/Pages';

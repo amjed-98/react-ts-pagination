@@ -1,4 +1,4 @@
-import { listenFor, unSubscribe } from '@/lib/utils';
+import { listenFor } from '@/lib/utils';
 import { useEffect, useRef, useState } from 'react';
 
 type ReturnType<PageItem> = {
@@ -43,9 +43,7 @@ const usePagination = <PageItem>({
     const end = currentPageNumber.current * itemsPerPage;
     setPageItems(items.slice(start, end));
 
-    listenFor('pageChange', handleCurrentPageNumber);
-
-    return () => unSubscribe('pageChange', handleCurrentPageNumber);
+    return listenFor('pageChange', handleCurrentPageNumber);
   }, []);
 
   return {
