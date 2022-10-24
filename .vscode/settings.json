@@ -1,0 +1,10 @@
+{
+  "files.eol": "\n",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true,
+    "source.fixAll.prettier": true
+  },
+  "eslint.validate": ["javascript", "javascriptreact", "typescriptreact", "typescript"]
+}
