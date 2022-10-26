@@ -63,7 +63,7 @@ const Pages: FC<Props> = (props) => {
 
   useEffect(listenFor('pageChange', handleScrollToPageNumber), []);
 
-  const className = pagesContainerClass || 'pagination';
+  const className = pagesContainerClass || 'pages';
   return (
     <div className={className} ref={pagesRef}>
       {pages.map((page) => (
