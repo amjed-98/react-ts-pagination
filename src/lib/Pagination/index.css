@@ -31,22 +31,21 @@
 .pageNumber {
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
   user-select: none;
   background-color: var(--background-color);
   color: var(--color);
   text-align: center;
-  height: 32px;
+  height: 2rem;
   margin: auto 4px;
   display: flex;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
   letter-spacing: 0.01071em;
-  border-radius: 16px;
+  border-radius: 1rem;
   line-height: 1.43;
-  font-size: 13px;
-  min-width: 32px;
+  font-size: 1rem;
+  min-width: 2rem;
 }
 
 .pageNumber:hover {
