@@ -21,7 +21,7 @@
 .pages {
   display: flex;
   overflow: hidden;
-  max-width: 44rem;
+  max-width: 22rem;
   justify-content: flex-start;
   padding-bottom: 1rem;
   padding-bottom: 1rem;
@@ -29,18 +29,24 @@
 }
 
 .pageNumber {
-  font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 50%;
   transition: all 0.3s ease-in-out;
   user-select: none;
   background-color: var(--background-color);
   color: var(--color);
-  width: 50px;
-  height: 36px;
-  line-height: 36px;
   text-align: center;
+  height: 32px;
+  margin: auto 4px;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.01071em;
+  border-radius: 16px;
+  line-height: 1.43;
+  font-size: 13px;
+  min-width: 32px;
 }
 
 .pageNumber:hover {
