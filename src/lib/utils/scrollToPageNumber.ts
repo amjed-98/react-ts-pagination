@@ -2,7 +2,7 @@ import type { RefObject } from 'react';
 
 type CachedPages = Record<number, HTMLSpanElement | undefined>;
 
-let cachedPages: CachedPages = {};
+let cachedPages: CachedPages;
 
 const scrollToPageNumber = (containerRef: RefObject<HTMLDivElement>, pageNumber: number) => {
   if (!containerRef.current) return;
