@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, type FC } from 'react';
+import { useEffect, useMemo, useRef, type FC } from 'react';
 import { listenFor, scrollToPageNumber } from '@/lib/utils';
 import PageNumber from './PageNumber';
 
@@ -78,6 +78,4 @@ const Pages: FC<Props> = (props) => {
   );
 };
 
-export default memo(Pages, (prevProps, props) => {
-  return prevProps.currentPageNumber === props.currentPageNumber;
-});
+export default Pages;

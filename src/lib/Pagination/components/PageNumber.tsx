@@ -1,5 +1,5 @@
 import { dispatchEvent } from '@/lib/utils';
-import { useMemo, memo, type MouseEvent, type FC } from 'react';
+import { useMemo, type MouseEvent, type FC } from 'react';
 
 type Props = {
   page: Page;
@@ -54,6 +54,4 @@ const PageNumber: FC<Props> = (props) => {
   );
 };
 
-export default memo(PageNumber, (prevProps, currentProps) => {
-  return prevProps.currentPageNumber === currentProps.currentPageNumber;
-});
+export default PageNumber;
