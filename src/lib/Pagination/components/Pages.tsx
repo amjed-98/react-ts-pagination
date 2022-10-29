@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useRef, type FC, type CSSProperties } from 'react';
-import { listenFor, scrollToPageNumber } from '@/lib/utils';
+import { useMemo, forwardRef, type CSSProperties } from 'react';
 import PageNumber from './PageNumber';
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
   pagesContainerClass: string;
 };
 
-const Pages: FC<Props> = (props) => {
+const Pages = forwardRef<HTMLDivElement, Props>((props, pagesRef) => {
   const {
     numberOfPages,
     pageClass,
@@ -24,8 +23,6 @@ const Pages: FC<Props> = (props) => {
     handlePageChange,
     pagesContainerClass,
   } = props;
-
-  const pagesRef = useRef<HTMLDivElement>(null);
 
   const pages = useMemo<Page[]>(() => {
     return Array.from({ length: numberOfPages }, (_, i) => {
@@ -41,12 +38,6 @@ const Pages: FC<Props> = (props) => {
     });
   }, [currentPageNumber, numberOfPages, activePageStyle, pageStyle]);
 
-  const handleScrollToPageNumber = ({ detail: pageNumber }: CustomEvent<number>): void => {
-    scrollToPageNumber(pagesRef, pageNumber);
-  };
-
-  useEffect(listenFor('pageChange', handleScrollToPageNumber), []);
-
   return (
     <div className={pagesContainerClass} ref={pagesRef}>
       {pages.map((page) => (
@@ -59,6 +50,6 @@ const Pages: FC<Props> = (props) => {
       ))}
     </div>
   );
-};
+});
 
 export default Pages;

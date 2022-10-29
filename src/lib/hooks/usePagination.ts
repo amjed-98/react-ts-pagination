@@ -31,8 +31,7 @@ const usePagination = <PageItem>({
     const isFirstPage = pageNumber + 1 === FIRST_PAGE_NUMBER;
     const isLastPage = pageNumber - 1 === LAST_PAGE_NUMBER;
 
-    if (isLastPage) return;
-    if (isFirstPage) return;
+    if (isFirstPage || isLastPage) return;
 
     const start = (pageNumber - 1) * itemsPerPage;
     const end = pageNumber * itemsPerPage;

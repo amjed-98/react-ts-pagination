@@ -4,7 +4,10 @@ type CachedPages = Record<number, HTMLSpanElement | undefined>;
 
 let cachedPages: CachedPages;
 
-const scrollToPageNumber = (containerRef: RefObject<HTMLDivElement>, pageNumber: number) => {
+const getPageRef = (
+  containerRef: RefObject<HTMLDivElement>,
+  pageNumber: number,
+): HTMLSpanElement | undefined => {
   if (!containerRef.current) return;
 
   if (!cachedPages) {
@@ -12,7 +15,7 @@ const scrollToPageNumber = (containerRef: RefObject<HTMLDivElement>, pageNumber:
   }
 
   const indexMargin = 1;
-  cachedPages[pageNumber - indexMargin]?.scrollIntoView();
+  return cachedPages[pageNumber - indexMargin];
 };
 
-export default scrollToPageNumber;
+export default getPageRef;

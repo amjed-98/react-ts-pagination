@@ -1,6 +1,6 @@
 import type { FC, JSXElementConstructor, WheelEvent, CSSProperties } from 'react';
-import { useCallback } from 'react';
-import { dispatchEvent } from '@/lib/utils';
+import { useCallback, useEffect, useRef } from 'react';
+import { dispatchEvent, getPageRef, listenFor, scrollToPage } from '@/lib/utils';
 import Button from './components/Button';
 import Pages from './components/Pages';
 import './index.css';
@@ -8,7 +8,7 @@ import './index.css';
 type Props = {
   currentPageNumber: number;
   numberOfPages: number;
-  onPageChange?: (pageNumber: number) => void;
+  onPageChange?: (pageNumber: number, pageRef: HTMLSpanElement | undefined) => void;
   paginationContainerClass?: string;
   pagesContainerClass?: string;
   nextLabel?: string | JSXElementConstructor<Record<string, never>>;
@@ -38,13 +38,19 @@ const Pagination: FC<Props> = (props) => {
     nextLabel = '❯',
   } = props;
 
-  const handlePageChange = useCallback((pageNumber: number) => {
+  const pagesRef = useRef<HTMLDivElement>(null);
+
+  const handlePageChange = useCallback((pageNumber: number): void => {
     /*
       ? if pass  onPageChange handler function then will use it
       ? else will use the default handler that is in usePagination hook
     */
-    if (onPageChange) onPageChange(pageNumber);
-    else dispatchEvent('pageChange', pageNumber);
+    if (onPageChange) {
+      const pageRef = getPageRef(pagesRef, pageNumber);
+      return onPageChange(pageNumber, pageRef);
+    }
+
+    dispatchEvent('pageChange', pageNumber);
   }, []);
 
   const handleMouseWheelScroll = (e: WheelEvent<HTMLDivElement>) => {
@@ -52,6 +58,12 @@ const Pagination: FC<Props> = (props) => {
     const target = e.target as HTMLDivElement;
     target.scrollLeft += e.deltaY * 2;
   };
+
+  const handleScrollToPage = ({ detail: pageNumber }: CustomEvent<number>): void => {
+    scrollToPage(pagesRef, pageNumber);
+  };
+
+  useEffect(listenFor('pageChange', handleScrollToPage), []);
 
   return (
     <div className={paginationContainerClass} onWheel={handleMouseWheelScroll}>
@@ -62,6 +74,7 @@ const Pagination: FC<Props> = (props) => {
       />
 
       <Pages
+        ref={pagesRef}
         currentPageNumber={currentPageNumber}
         numberOfPages={numberOfPages}
         pageStyle={pageStyle}
