@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
@@ -34,5 +36,10 @@ export default defineConfig({
         },
       },
     },
+  },
+
+  test: {
+    globals: true,
+    environment: 'jsdom',
   },
 });
