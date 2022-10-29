@@ -1,3 +1,10 @@
+#root {
+  --color: #A0A7B9;
+  --hover-color: white;
+  --background-color: transparent;
+  --hover-background-color: #8D00D8
+}
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -6,7 +13,7 @@
   margin-top: 1rem;
 }
 
-.pagination .btn {
+.btn {
   border: none;
   outline: none;
   background-color: transparent;
@@ -28,7 +35,7 @@
   gap: 0.8rem;
 }
 
-.pageNumber {
+.page-number {
   font-weight: bold;
   cursor: pointer;
   user-select: none;
@@ -48,7 +55,12 @@
   min-width: 2rem;
 }
 
-.pageNumber:hover {
-  background-color: var(--hover-bgColor);
+.active-page-number {
+  background-color: var(--hover-background-color);
+  color: var(--hover-color);
+}
+
+.page-number:hover {
+  background-color: var(--hover-background-color);
   color: var(--hover-color);
 }

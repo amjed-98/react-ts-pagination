@@ -1,4 +1,3 @@
-import { dispatchEvent } from '@/lib/utils';
 import { useMemo, type MouseEvent, type FC } from 'react';
 
 type Props = {
@@ -9,42 +8,32 @@ type Props = {
 
 const PageNumber: FC<Props> = (props) => {
   const {
-    page: { pageClass, activeClass, pageNumber, style },
+    page: { pageClass, activePageClass, pageNumber, style },
     handlePageChange,
     currentPageNumber,
   } = props;
 
-  const computedClasses = useMemo<string | 'pageNumber'>(() => {
-    const isActiveClass = !!(activeClass && currentPageNumber === pageNumber);
+  const computedClasses = useMemo<string>(() => {
+    const isActivePage = currentPageNumber === pageNumber;
 
-    if (isActiveClass) {
-      return `${pageClass} ${activeClass}`;
-    }
+    if (isActivePage) return `${pageClass} ${activePageClass}`;
 
-    if (pageClass) {
-      return `${pageClass}`;
-    }
+    return pageClass;
+  }, [currentPageNumber, activePageClass, pageClass]);
 
-    return 'pageNumber';
-  }, [currentPageNumber]);
-
-  const handlePageClick = () => {
-    if (handlePageChange) handlePageChange(pageNumber);
-    else dispatchEvent('pageChange', pageNumber);
-  };
-
+  // ? add hover effect when activePageClass is passed
   const handleOnHoverClass = (e: MouseEvent<HTMLSpanElement>): void => {
-    if (!activeClass) return;
+    if (!activePageClass) return;
     if (currentPageNumber === pageNumber) return;
 
     const pageElement = e.target as HTMLSpanElement;
-    pageElement.classList.toggle(activeClass);
+    pageElement.classList.toggle(activePageClass);
   };
 
   return (
     <span
-      onClick={handlePageClick.bind(null, pageNumber)}
-      style={style as Record<string, string>}
+      onClick={handlePageChange.bind(null, pageNumber)}
+      style={style}
       className={computedClasses}
       onMouseEnter={handleOnHoverClass}
       onMouseLeave={handleOnHoverClass}
