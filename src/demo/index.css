@@ -1,6 +1,9 @@
 #root {
   zoom: 1;
+  padding-inline: 16rem;
+  margin-top: 3rem;
 }
+
 
 table {
   font-family: arial, sans-serif;
