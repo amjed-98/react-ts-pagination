@@ -32,7 +32,7 @@
     "paginator"
   ],
   "scripts": {
-    "dev": "vite",
+    "demo": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .tsx,.ts src",

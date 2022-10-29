@@ -11,6 +11,11 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
+
+  server: {
+    open: '/src/demo/index.html',
+  },
+
   build: {
     cssCodeSplit: false,
     lib: {
