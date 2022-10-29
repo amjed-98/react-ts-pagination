@@ -25,8 +25,11 @@ const usePagination = <PageItem>({
   const numberOfPages = Math.ceil(items.length / itemsPerPage);
 
   const handleCurrentPageNumber = ({ detail: pageNumber }: CustomEvent<number>): void => {
-    const isLastPage = pageNumber - 1 === numberOfPages;
-    const isFirstPage = pageNumber + 1 === 1;
+    const FIRST_PAGE_NUMBER = 1;
+    const LAST_PAGE_NUMBER = numberOfPages;
+
+    const isFirstPage = pageNumber + 1 === FIRST_PAGE_NUMBER;
+    const isLastPage = pageNumber - 1 === LAST_PAGE_NUMBER;
 
     if (isLastPage) return;
     if (isFirstPage) return;
