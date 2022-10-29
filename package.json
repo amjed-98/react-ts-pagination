@@ -1,6 +1,6 @@
 {
   "name": "ts-react-pagination",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "author": "amjad yahia",
   "description": "a declarative and simple pagination for react",
@@ -31,6 +31,13 @@
     "typescript react",
     "paginator"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amjed-98/ts-react-pagination"
+  },
+  "bugs": {
+    "url": "https://github.com/amjed-98/ts-react-pagination/issues"
+  },
   "scripts": {
     "demo": "vite",
     "build": "tsc && vite build",
