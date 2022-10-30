@@ -1,12 +1,12 @@
-import { useMemo, type MouseEvent, type FC } from 'react';
+import { useMemo, type MouseEvent, type FC, useCallback } from 'react';
 
-type Props = {
+export type Props = {
   page: Page;
   currentPageNumber: number;
   handlePageChange: (pageNumber: number) => void;
 };
 
-const PageNumber: FC<Props> = (props) => {
+const Page: FC<Props> = (props) => {
   const {
     page: { pageClass, activePageClass, pageNumber, style },
     handlePageChange,
@@ -30,9 +30,13 @@ const PageNumber: FC<Props> = (props) => {
     pageElement.classList.toggle(activePageClass);
   };
 
+  const handlePageClick = useCallback((): void => {
+    handlePageChange(pageNumber);
+  }, []);
+
   return (
     <span
-      onClick={handlePageChange.bind(null, pageNumber)}
+      onClick={handlePageClick}
       style={style}
       className={computedClasses}
       onMouseEnter={handleOnHoverClass}
@@ -43,4 +47,4 @@ const PageNumber: FC<Props> = (props) => {
   );
 };
 
-export default PageNumber;
+export default Page;

@@ -1,5 +1,5 @@
 import { useMemo, forwardRef, type CSSProperties } from 'react';
-import PageNumber from './PageNumber';
+import Page from './Page';
 
 type Props = {
   numberOfPages: number;
@@ -41,7 +41,7 @@ const Pages = forwardRef<HTMLDivElement, Props>((props, pagesRef) => {
   return (
     <div className={pagesContainerClass} ref={pagesRef}>
       {pages.map((page) => (
-        <PageNumber
+        <Page
           key={page.pageNumber}
           page={page}
           currentPageNumber={currentPageNumber}
