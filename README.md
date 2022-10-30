@@ -92,7 +92,6 @@ function App() {
 
     currentPageNumber.current = pageNumber;
     setPageItems(items.slice(start, end));
-    pageRef?.scrollIntoView();
   };
 
   useEffect(() => {
@@ -119,7 +118,7 @@ Full example on [SandBox](https://codesandbox.io/p/sandbox/condescending-tristan
 
 #### usePagination hook:
 
-## Props
+## Parameters: an single object Parameter with these props:
 
 | Name                | Type     | Description                                                                    |
 | ------------------- | -------- | ------------------------------------------------------------------------------ |
@@ -127,7 +126,7 @@ Full example on [SandBox](https://codesandbox.io/p/sandbox/condescending-tristan
 | `initialPageNumber` | `Number` | **Optional:** The initial page selected. <br/> Default is 1                    |
 | `ItemsPerPage`      | `Number` | **Optional:** the number of items to display on each page. <br/> Default is 10 |
 
-## Returns an Object with these propeties:
+## Returns an Object with these props:
 
 | Name                | Type     | Description                                                                                            |
 | ------------------- | -------- | ------------------------------------------------------------------------------------------------------ |

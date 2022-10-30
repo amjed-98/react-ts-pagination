@@ -10,7 +10,7 @@ function Without_usePagination_Hook() {
   const [pageItems, setPageItems] = useState<typeof items>([]);
   const currentPageNumber = useRef(1);
 
-  const handlePageChange = (pageNumber: number, pageRef: HTMLSpanElement | undefined) => {
+  const handlePageChange = (pageNumber: number, _pageRef: HTMLSpanElement | undefined) => {
     const FIRST_PAGE_NUMBER = 1;
     const LAST_PAGE_NUMBER = numberOfPages;
 
@@ -24,8 +24,6 @@ function Without_usePagination_Hook() {
 
     currentPageNumber.current = pageNumber;
     setPageItems(items.slice(start, end));
-
-    pageRef?.scrollIntoView();
   };
 
   useEffect(() => {

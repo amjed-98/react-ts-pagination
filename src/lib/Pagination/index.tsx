@@ -47,6 +47,7 @@ const Pagination: FC<Props> = (props) => {
     */
     if (onPageChange) {
       const pageRef = getPageRef(pagesRef, pageNumber);
+      pageRef?.scrollIntoView({ behavior: 'smooth' });
       return onPageChange(pageNumber, pageRef);
     }
 
