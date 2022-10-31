@@ -1,0 +1,37 @@
+// Vitest Snapshot v1
+
+exports[`Page Component > should match the pages snapshot 1`] = `
+<body>
+  <div>
+    <div
+      class="page-container"
+    >
+      <span
+        class="page active"
+      >
+        1
+      </span>
+      <span
+        class="page"
+      >
+        2
+      </span>
+      <span
+        class="page"
+      >
+        3
+      </span>
+      <span
+        class="page"
+      >
+        4
+      </span>
+      <span
+        class="page"
+      >
+        5
+      </span>
+    </div>
+  </div>
+</body>
+`;
