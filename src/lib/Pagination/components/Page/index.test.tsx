@@ -1,4 +1,5 @@
 import { render, screen, userEvent } from '@/lib/test_setup';
+import { describe, expect, it } from 'vitest';
 import Page, { type Props } from '.';
 
 const props: Props = {
@@ -14,7 +15,7 @@ const props: Props = {
   },
 };
 
-describe('Page', () => {
+describe('Page Component', () => {
   const { pageNumber, activePageClass, pageClass, style } = props.page;
 
   it(`should render Page Component with ${pageClass} class`, () => {
@@ -58,7 +59,6 @@ describe('Page', () => {
     await userEvent.click(pageElement);
 
     expect(spy.getMockName()).toBe('handlePageChange');
-    expect(spy).toHaveBeenCalledTimes(2);
-    expect(spy).toHaveBeenCalledWith(props.page.pageNumber);
+    expect(spy).toHaveBeenNthCalledWith(2, pageNumber);
   });
 });
