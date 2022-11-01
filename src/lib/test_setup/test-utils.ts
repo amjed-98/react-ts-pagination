@@ -1,13 +1,10 @@
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render, RenderOptions } from '@testing-library/react';
 import { afterEach } from 'vitest';
 
 afterEach(cleanup);
 
-const customRender = (ui: React.ReactElement, options = {}) =>
-  render(ui, {
-    wrapper: ({ children }) => children,
-    ...options,
-  });
+const customRender = (ui: React.ReactElement, options: RenderOptions = {}) => render(ui, options);
+export const arrayOf = (length: number) => Array.from({ length });
 
 export * from '@testing-library/react';
 
