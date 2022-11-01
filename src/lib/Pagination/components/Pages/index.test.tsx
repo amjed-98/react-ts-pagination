@@ -1,5 +1,7 @@
-import { render } from '@/lib/test_setup';
+import { render, renderHook } from '@/lib/test_setup';
 import Pages, { type Props } from '.';
+import { describe, expect, it } from 'vitest';
+import { useRef } from 'react';
 
 const props: Props = {
   numberOfPages: 5,
@@ -30,5 +32,12 @@ describe('Page Component', () => {
     const { baseElement } = render(<Pages {...props} />);
 
     expect(baseElement).toMatchSnapshot();
+  });
+
+  it('should mutate the forwarded Ref to be the pages Dom reference', () => {
+    const { result } = renderHook(() => useRef<HTMLDivElement>(null));
+    const { asFragment } = render(<Pages {...props} ref={result.current} />);
+
+    expect(result.current.current).toEqual(asFragment().firstChild);
   });
 });

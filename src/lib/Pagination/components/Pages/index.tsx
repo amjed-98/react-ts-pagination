@@ -7,9 +7,9 @@ export type Props = {
   handlePageChange: (pageNumber: number) => void;
   pageClass: string;
   activePageClass: string;
+  pagesContainerClass: string;
   pageStyle?: CSSProperties;
   activePageStyle?: CSSProperties;
-  pagesContainerClass: string;
 };
 
 const Pages = forwardRef<HTMLDivElement, Props>((props, pagesRef) => {
