@@ -1,0 +1,53 @@
+// Vitest Snapshot v1
+
+exports[`Pagination Component with default props > should match snapshot 1`] = `
+<div
+  class="pagination"
+  role="pagination"
+>
+  <button
+    class="btn"
+  >
+    ❮
+  </button>
+  <div
+    class="pages"
+  >
+    <span
+      class="page-number"
+    >
+      1
+    </span>
+    <span
+      class="page-number"
+    >
+      2
+    </span>
+    <span
+      class="page-number active-page-number"
+    >
+      3
+    </span>
+    <span
+      class="page-number"
+    >
+      4
+    </span>
+    <span
+      class="page-number"
+    >
+      5
+    </span>
+    <span
+      class="page-number"
+    >
+      6
+    </span>
+  </div>
+  <button
+    class="btn"
+  >
+    ❯
+  </button>
+</div>
+`;

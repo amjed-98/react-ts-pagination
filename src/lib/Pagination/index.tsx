@@ -1,11 +1,17 @@
-import type { FC, JSXElementConstructor, WheelEvent, CSSProperties } from 'react';
+import type { FC, JSXElementConstructor, CSSProperties } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
-import { dispatchEvent, getPageRef, listenFor, scrollToPage } from '@/lib/utils';
+import {
+  dispatchEvent,
+  getPageRef,
+  listenFor,
+  scrollToPage,
+  handleMouseWheelScroll,
+} from '@/lib/utils';
 import Button from './components/Button';
 import Pages from './components/Pages';
 import './index.css';
 
-type Props = {
+export type Props = {
   currentPageNumber: number;
   numberOfPages: number;
   onPageChange?: (pageNumber: number, pageRef: HTMLSpanElement | undefined) => void;
@@ -47,30 +53,25 @@ const Pagination: FC<Props> = (props) => {
     */
     if (onPageChange) {
       const pageRef = getPageRef(pagesRef, pageNumber);
-      pageRef?.scrollIntoView({ behavior: 'smooth' });
-      return onPageChange(pageNumber, pageRef);
-    }
 
-    dispatchEvent('pageChange', pageNumber);
+      onPageChange(pageNumber, pageRef);
+      pageRef?.scrollIntoView({ behavior: 'smooth' });
+    } else dispatchEvent('pageChange', pageNumber);
   }, []);
 
-  const handleMouseWheelScroll = (e: WheelEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const target = e.target as HTMLDivElement;
-    target.scrollLeft += e.deltaY * 2;
-  };
-
-  const handleScrollToPage = ({ detail: pageNumber }: CustomEvent<number>): void => {
-    scrollToPage(pagesRef, pageNumber);
-  };
-
-  useEffect(listenFor('pageChange', handleScrollToPage), []);
+  useEffect(
+    () =>
+      listenFor<number>('pageChange', ({ detail: pageNumber }) =>
+        scrollToPage(pagesRef, pageNumber),
+      ),
+    [],
+  );
 
   return (
-    <div className={paginationContainerClass} onWheel={handleMouseWheelScroll}>
+    <div className={paginationContainerClass} onWheel={handleMouseWheelScroll} role='pagination'>
       <Button
         Label={prevLabel}
-        className={nextBtnClass}
+        className={prevBtnClass}
         onClick={handlePageChange.bind(null, currentPageNumber - 1)}
       />
 
@@ -88,7 +89,7 @@ const Pagination: FC<Props> = (props) => {
 
       <Button
         Label={nextLabel}
-        className={prevBtnClass}
+        className={nextBtnClass}
         onClick={handlePageChange.bind(null, currentPageNumber + 1)}
       />
     </div>

@@ -1,0 +1,83 @@
+// Vitest Snapshot v1
+
+exports[`Pagination Component  with custom props > should match snapshot 1`] = `
+<div
+  class="pagination-container-class"
+  role="pagination"
+>
+  <button
+    class="prev-btn-class"
+  >
+    prev
+  </button>
+  <div
+    class="pages-container-class"
+  >
+    <span
+      class="page-class"
+      style="color: red;"
+    >
+      1
+    </span>
+    <span
+      class="page-class"
+      style="color: red;"
+    >
+      2
+    </span>
+    <span
+      class="page-class"
+      style="color: red;"
+    >
+      3
+    </span>
+    <span
+      class="page-class active-page-class"
+      style="color: blue;"
+    >
+      4
+    </span>
+    <span
+      class="page-class"
+      style="color: red;"
+    >
+      5
+    </span>
+    <span
+      class="page-class"
+      style="color: red;"
+    >
+      6
+    </span>
+    <span
+      class="page-class"
+      style="color: red;"
+    >
+      7
+    </span>
+    <span
+      class="page-class"
+      style="color: red;"
+    >
+      8
+    </span>
+    <span
+      class="page-class"
+      style="color: red;"
+    >
+      9
+    </span>
+    <span
+      class="page-class"
+      style="color: red;"
+    >
+      10
+    </span>
+  </div>
+  <button
+    class="next-btn-class"
+  >
+    next
+  </button>
+</div>
+`;
