@@ -21,15 +21,14 @@ Install `ts-react-pagination`
 
 with [npm](https://www.npmjs.com/):
 
-```
+```bash
 npm install ts-react-pagination
 ```
 
 with [yarn](https://yarnpkg.com/):
 
-```
+```bash
 yarn add ts-react-pagination
-
 ```
 
 ## Usage
@@ -38,24 +37,18 @@ There are two ways to use this package:
 
 #### 1- The first and recommended way is by using the `usePagination` hook with the Paginaiton component like this:
 
-```typescript=
+```typescript
 import { Pagination, usePagination } from 'ts-react-pagination';
 import 'ts-react-pagination/styles.css';
 
 function App() {
-
-  const {
-         currentPageNumber, numberOfPages, pageItems
-    } = usePagination({ items });
+  const { currentPageNumber, numberOfPages, pageItems } = usePagination({ items });
 
   return (
     <div className='App'>
       <Table pageItems={pageItems} />
 
-      <Pagination
-        currentPageNumber={currentPageNumber}
-        numberOfPages={numberOfPages}
-      />
+      <Pagination currentPageNumber={currentPageNumber} numberOfPages={numberOfPages} />
     </div>
   );
 }
@@ -67,9 +60,9 @@ Full example on [SandBox](https://codesandbox.io/p/sandbox/crimson-cherry-5emhj9
 
 #### 2: The second way is how every other pagination library does, by letting you do all the heavy lefting of managing all states and logic like this:
 
-```typescript=
-import { Pagination } from "ts-react-pagination";
-import "ts-react-pagination/styles.css";
+```typescript
+import { Pagination } from 'ts-react-pagination';
+import 'ts-react-pagination/styles.css';
 
 const ITEMS_PER_PAGE = 10;
 const numberOfPages = Math.ceil(items.length / ITEMS_PER_PAGE);
@@ -101,7 +94,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className='App'>
       <Table pageItems={pageItems} />
 
       <Pagination
@@ -116,9 +109,9 @@ function App() {
 
 Full example on [SandBox](https://codesandbox.io/p/sandbox/condescending-tristan-p6pouc?file=%2Fsrc%2FApp.tsx&selection=%5B%7B%22endColumn%22%3A18%2C%22endLineNumber%22%3A44%2C%22startColumn%22%3A18%2C%22startLineNumber%22%3A44%7D%5D).
 
-#### usePagination hook:
+## usePagination hook:
 
-## Parameters: an single object Parameter with these props:
+### Parameters: a single object Parameter with these props:
 
 | Name                | Type     | Description                                                                    |
 | ------------------- | -------- | ------------------------------------------------------------------------------ |
@@ -126,7 +119,7 @@ Full example on [SandBox](https://codesandbox.io/p/sandbox/condescending-tristan
 | `initialPageNumber` | `Number` | **Optional:** The initial page selected. <br/> Default is 1                    |
 | `ItemsPerPage`      | `Number` | **Optional:** the number of items to display on each page. <br/> Default is 10 |
 
-## Returns an Object with these props:
+### Returns: an Object with these props:
 
 | Name                | Type     | Description                                                                                            |
 | ------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
@@ -136,9 +129,9 @@ Full example on [SandBox](https://codesandbox.io/p/sandbox/condescending-tristan
 
 <br/>
 
-#### Pagination Component
+## Pagination Component:
 
-## Props
+### Props:
 
 | Name                       | Type                                | Description                                                                                                                                                                                                                                                                                                                            |
 | -------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -160,23 +153,38 @@ Full example on [SandBox](https://codesandbox.io/p/sandbox/condescending-tristan
 
 To run the demo locally, clone the repository and move into it:
 
-```console
+```bash
 git clone git@github.com:amjed-98/ts-react-pagination.git
 cd ts-react-pagination
 ```
 
 Install dependencies:
 
-```console
+```bash
 npm install | yarn
 ```
 
 preview the Demo
 
-```console
+```bash
 npm run demo | yarn demo
 ```
 
 Open your browser and go to [http://127.0.0.1:5173/src/demo/index.html](http://127.0.0.1:5173/src/demo/index.html)
 
-<img src="https://i.imgur.com/KbpKmVI.gif" alt="Pagination demo" />
+<img src="https://i.imgur.com/hu97NWG.gif" alt="Pagination demo" />
+
+<br/>
+<br/>
+
+Run the tests
+
+```bash
+npm run test | yarn test => run tests in terminal
+```
+
+Run the tests in the browser with nice UI presentation
+
+```bash
+npm run test:ui | yarn test:ui
+```
