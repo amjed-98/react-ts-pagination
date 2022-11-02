@@ -2,6 +2,8 @@
 
 [![NPM](https://nodei.co/npm/ts-react-pagination.png?downloads=true)](https://www.npmjs.com/package/ts-react-pagination)
 
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mui/material-ui/blob/HEAD/LICENSE)
+
 **A React.ts Component to render pagination in a simple and Declarative way.**
 
 By installing the package you'll have this default pagination look, but you can easilly overwrite it using your own classes and styles.
@@ -21,13 +23,13 @@ Install `ts-react-pagination`
 
 with [npm](https://www.npmjs.com/):
 
-```bash
+```sh
 npm install ts-react-pagination
 ```
 
 with [yarn](https://yarnpkg.com/):
 
-```bash
+```sh
 yarn add ts-react-pagination
 ```
 
@@ -35,9 +37,9 @@ yarn add ts-react-pagination
 
 There are two ways to use this package:
 
-#### 1- The first and recommended way is by using the `usePagination` hook with the Paginaiton component like this:
+### 1- The first and recommended way is by using the `usePagination` hook with the Paginaiton Component like this:
 
-```typescript
+```jsx
 import { Pagination, usePagination } from 'ts-react-pagination';
 import 'ts-react-pagination/styles.css';
 
@@ -56,11 +58,13 @@ function App() {
 
 #### Note: if you want to have the default styles, you must import the styles file like in line 2. else you'll have to style everything using your own classes or style.
 
-Full example on [SandBox](https://codesandbox.io/p/sandbox/crimson-cherry-5emhj9?file=%2Fsrc%2FApp.tsx&selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A9%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A9%7D%5D).
+[![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/crimson-cherry-5emhj9?file=%2Fsrc%2FApp.tsx&selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A9%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A9%7D%5D)
 
-#### 2: The second way is how every other pagination library does, by letting you do all the heavy lefting of managing all states and logic like this:
+---
 
-```typescript
+### 2- The second way is how every other pagination library does, by letting you do all the heavy lefting of managing all states and logic like this:\*
+
+```jsx
 import { Pagination } from 'ts-react-pagination';
 import 'ts-react-pagination/styles.css';
 
@@ -68,7 +72,7 @@ const ITEMS_PER_PAGE = 10;
 const numberOfPages = Math.ceil(items.length / ITEMS_PER_PAGE);
 
 function App() {
-  const [pageItems, setPageItems] = useState<typeof items>([]);
+  const [pageItems, setPageItems] = useState < typeof items > [];
   const currentPageNumber = useRef(1);
 
   const handlePageChange = (pageNumber: number, pageRef: HTMLSpanElement | undefined) => {
@@ -107,7 +111,7 @@ function App() {
 }
 ```
 
-Full example on [SandBox](https://codesandbox.io/p/sandbox/condescending-tristan-p6pouc?file=%2Fsrc%2FApp.tsx&selection=%5B%7B%22endColumn%22%3A18%2C%22endLineNumber%22%3A44%2C%22startColumn%22%3A18%2C%22startLineNumber%22%3A44%7D%5D).
+[![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/condescending-tristan-p6pouc?file=%2Fsrc%2FApp.tsx&selection=%5B%7B%22endColumn%22%3A18%2C%22endLineNumber%22%3A44%2C%22startColumn%22%3A18%2C%22startLineNumber%22%3A44%7D%5D)
 
 ## usePagination hook:
 
@@ -142,10 +146,10 @@ Full example on [SandBox](https://codesandbox.io/p/sandbox/condescending-tristan
 | `nextBtnClass`             | `String`                            | **Optional:** A class name to apply to the next button. <br/> Default is `btn`                                                                                                                                                                                                                                                         |
 | `prevLabel `               | `String or Refrence to A Component` | **Optional:** The prev button text label. <br/> Default is : `❮`                                                                                                                                                                                                                                                                       |
 | `prevBtnClass`             | `String`                            | **Optional:** A class name to apply to the prev button. <br/> Default is `btn`                                                                                                                                                                                                                                                         |
-| `pageStyle`                | `Object`                            | **Optional:** The defualt page style object with color and backgroundColor properties. <br/> Default is:`{ color:#A0A7B9, backgroundColor: transparent }`                                                                                                                                                                              |
-| `activePageSyle`           | `Object`                            | **Optional:** The acitve page style object with color and background propeties. <br/> Default is `{ color:white, backgroundColor: #8D00D8 }`                                                                                                                                                                                           |
-| `pageClass`                | `String`                            | **Optional:** A class name to apply to each page. <br/> The default class is `pageNumber`                                                                                                                                                                                                                                              |
-| `activePageClass`          | `String`                            | **Optional:** A class name to to apply to the current acitve page or the page that being hovered. <br/> Default is `undefined`                                                                                                                                                                                                         |
+| `pageStyle`                | `Object`                            | **Optional:** The defualt page style object with color and backgroundColor properties. <br/> Default is:`undefined`                                                                                                                                                                                                                    |
+| `activePageSyle`           | `Object`                            | **Optional:** The acitve page style object with color and background propeties. <br/> Default is `undefined`                                                                                                                                                                                                                           |
+| `pageClass`                | `String`                            | **Optional:** A class name to apply to each page. <br/> The default class is `page`                                                                                                                                                                                                                                                    |
+| `activePageClass`          | `String`                            | **Optional:** A class name to to apply to the current acitve page or the page that being hovered. <br/> Default is `active-page`                                                                                                                                                                                                       |
 | `paginationContainerClass` | `String`                            | **Optional:** A class name to apply to the parent container for the whole component. <br/> Default is `pagination`                                                                                                                                                                                                                     |
 | `pagesContianerClass`      | `String`                            | **Optional:** A class name to apply to the direct parent of the pages. <br/> Default is `pages`                                                                                                                                                                                                                                        |
 
@@ -153,20 +157,20 @@ Full example on [SandBox](https://codesandbox.io/p/sandbox/condescending-tristan
 
 To run the demo locally, clone the repository and move into it:
 
-```bash
+```sh
 git clone git@github.com:amjed-98/ts-react-pagination.git
 cd ts-react-pagination
 ```
 
 Install dependencies:
 
-```bash
+```sh
 npm install | yarn
 ```
 
 preview the Demo
 
-```bash
+```sh
 npm run demo | yarn demo
 ```
 
@@ -180,7 +184,7 @@ Open your browser and go to [http://127.0.0.1:5173/src/demo/index.html](http://1
 Run the tests
 
 ```bash
-npm run test | yarn test => run tests in terminal
+npm run test | yarn test
 ```
 
 Run the tests in the browser with nice UI presentation

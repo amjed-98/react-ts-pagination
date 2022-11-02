@@ -14,32 +14,32 @@ exports[`Pagination Component with default props > should match snapshot 1`] = `
     class="pages"
   >
     <span
-      class="page-number"
+      class="page"
     >
       1
     </span>
     <span
-      class="page-number"
+      class="page"
     >
       2
     </span>
     <span
-      class="page-number active-page-number"
+      class="page active-page"
     >
       3
     </span>
     <span
-      class="page-number"
+      class="page"
     >
       4
     </span>
     <span
-      class="page-number"
+      class="page"
     >
       5
     </span>
     <span
-      class="page-number"
+      class="page"
     >
       6
     </span>
