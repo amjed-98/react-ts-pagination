@@ -1,6 +1,5 @@
-import items from './items';
+import items from '@/demo/items';
 import type { FC } from 'react';
-import './index.css';
 
 type Props = { pageItems: typeof items };
 
@@ -17,14 +16,14 @@ const Table: FC<Props> = ({ pageItems }) => {
       </thead>
 
       <tbody>
-        {pageItems.map(({ id, first_name, last_name, email, phone }) => {
+        {pageItems?.map((page) => {
           return (
-            <tr key={id}>
-              <td>{id}</td>
-              <td>{first_name}</td>
-              <td>{last_name}</td>
-              <td>{email}</td>
-              <td>{phone}</td>
+            <tr key={page.id}>
+              <td>{page.id}</td>
+              <td>{page.first_name}</td>
+              <td>{page.last_name}</td>
+              <td>{page.email}</td>
+              <td>{page.phone}</td>
             </tr>
           );
         })}

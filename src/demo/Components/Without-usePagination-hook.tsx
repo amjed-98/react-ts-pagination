@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import items from './items';
+import items from '@/demo/items';
 import { Pagination } from '@/lib';
 import Table from './Table';
 

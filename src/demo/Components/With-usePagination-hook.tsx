@@ -1,6 +1,5 @@
-import items from './items';
+import items from '@/demo/items';
 import { usePagination, Pagination } from '@/lib';
-import './index.css';
 import Table from './Table';
 
 function With_usePagination_Hook() {
