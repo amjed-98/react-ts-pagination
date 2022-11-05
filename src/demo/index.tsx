@@ -1,11 +1,17 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import With_usePagination_Hook from './With-usePagination-hook';
-import Without_usePagination_Hook from './Without-usePagination-hook';
+import {
+  // With_usePagination_Hook,
+  // Without_usePagination_Hook,
+  With_userServerPagination_Hook,
+} from '@/demo/Components';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <With_usePagination_Hook />
+    {/* <With_usePagination_Hook /> */}
     {/* <Without_usePagination_Hook /> */}
+
+    <With_userServerPagination_Hook />
   </StrictMode>,
 );

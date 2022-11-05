@@ -7,7 +7,17 @@ function With_usePagination_Hook() {
 
   return (
     <div className='App'>
-      <Table pageItems={pageItems} />
+      <Table>
+        {pageItems.map((page) => (
+          <tr key={page.id}>
+            <td>{page.id}</td>
+            <td>{page.first_name}</td>
+            <td>{page.last_name}</td>
+            <td>{page.email}</td>
+            <td>{page.phone}</td>
+          </tr>
+        ))}
+      </Table>
 
       <Pagination currentPageNumber={currentPageNumber} numberOfPages={numberOfPages} />
     </div>
