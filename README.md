@@ -10,10 +10,13 @@ By installing the package you'll have this default pagination look, but you can 
 
 <img src="https://i.imgur.com/ru9GoMQ.png" alt="Pagination demo 2" />
 
+
+#### Note: if you want to have the default styles, you must import the styles file `"import 'ts-react-pagination/styles.css'"`. else you'll have to style everything using your own classes or style.
+
 ## why ts-react-pagination
 
 - This package supports Typescript out of the box, so no need for `npm install @types/ts-react-pagination.`
-- Exposes a hook called `usePagination` that take cares of all the boilerplate for handling pagination states all in one line.
+- Exposes a two hooks`usePagination`, `useServerPagination` that take cares of all the boilerplate for handling pagination states all in one line.
 - Heavlly tested for all possible edge cases and prone to future error, so releasing a broken version of this package is highlly unlikely.
 - Strongly typed using advanced typescript to narrow down your types and avoid passing wrong prop or parameter type, which gives you nice auto-completion.
 
@@ -35,34 +38,105 @@ yarn add ts-react-pagination
 
 ## Usage
 
-There are two ways to use this package:
 
-### 1- The first and recommended way is by using the `usePagination` hook with the Paginaiton Component like this:
+* ### With usePagination Hook:
 
 ```jsx
 import { Pagination, usePagination } from 'ts-react-pagination';
 import 'ts-react-pagination/styles.css';
 
 function App() {
-  const { currentPageNumber, numberOfPages, pageItems } = usePagination({ items });
+  const {
+      currentPageNumber, pageItems, numberOfPages 
+  } = usePagination({ items, itemsPerPage: 8 });
+
 
   return (
     <div className='App'>
-      <Table pageItems={pageItems} />
+      <Table>
+        {pageItems.map((page) => (
+          <tr key={page.id}>
+            <td>{page.id}</td>
+            <td>{page.first_name}</td>
+            <td>{page.last_name}</td>
+            <td>{page.email}</td>
+            <td>{page.phone}</td>
+          </tr>
+        ))}
+      </Table>
 
-      <Pagination currentPageNumber={currentPageNumber} numberOfPages={numberOfPages} />
+      <Pagination 
+          currentPageNumber={currentPageNumber} 
+          numberOfPages={numberOfPages} 
+        />
     </div>
   );
 }
 ```
 
-#### Note: if you want to have the default styles, you must import the styles file like in line 2. else you'll have to style everything using your own classes or style.
 
 [![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/crimson-cherry-5emhj9?file=%2Fsrc%2FApp.tsx&selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A9%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A9%7D%5D)
 
 ---
 
-### 2- The second way is how every other pagination library does, by letting you do all the heavy lefting of managing all states and logic like this:\*
+<br/>
+
+* ### With useServerPagination Hook:
+***Note:* this hook is only used when your Api supports server pagination.**
+
+```jsx
+import { Pagination, useServerPagination } from 'ts-react-pagination';
+import 'ts-react-pagination/styles.css';
+
+function App() {
+  const {
+    pageItems,
+    isLoading,
+    currentPageNumber,
+  } = useServerPagination<Repo[]>({
+    url: 'https://api.github.com/orgs/GSG-G11/repos',
+    searchParams: { page: 'page', perPage: 'per_page' },
+    itemsPerPage: 5,
+    numberOfPages: 12,
+  });
+
+
+  return (
+       <div className='App'>
+      {isLoading ? (
+        <Skeleton />
+      ) : (
+        <Table tableHeaders={tableHeaders}>
+          {pageItems?.map(({ id, name, description, owner, visibility }) => (
+            <tr key={id}>
+              <td>{id}</td>
+              <td>{name}</td>
+              <td>{owner.login}</td>
+              <td>{description?.slice(0, 20)}</td>
+              <td>{visibility}</td>
+            </tr>
+          ))}
+        </Table>
+      )}
+          
+      <Pagination 
+          currentPageNumber={currentPageNumber} 
+          numberOfPages={numberOfPages} 
+        />
+    </div>
+  );
+}
+```
+
+
+[![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/kind-payne-q4qhdh?file=%2Fsrc%2FApp.tsx&selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A24%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A24%7D%5D)
+
+---
+
+<br/>
+
+* ### Passing your own custom props:
+
 
 ```jsx
 import { Pagination } from 'ts-react-pagination';
@@ -72,7 +146,7 @@ const ITEMS_PER_PAGE = 10;
 const numberOfPages = Math.ceil(items.length / ITEMS_PER_PAGE);
 
 function App() {
-  const [pageItems, setPageItems] = useState < typeof items > [];
+  const [pageItems, setPageItems] = useState<typeof items>([]);
   const currentPageNumber = useRef(1);
 
   const handlePageChange = (pageNumber: number, pageRef: HTMLSpanElement | undefined) => {
@@ -99,7 +173,17 @@ function App() {
 
   return (
     <div className='App'>
-      <Table pageItems={pageItems} />
+      <Table>
+        {pageItems.map((page) => (
+          <tr key={page.id}>
+            <td>{page.id}</td>
+            <td>{page.first_name}</td>
+            <td>{page.last_name}</td>
+            <td>{page.email}</td>
+            <td>{page.phone}</td>
+          </tr>
+        ))}
+      </Table>
 
       <Pagination
         currentPageNumber={currentPageNumber.current}
@@ -113,7 +197,11 @@ function App() {
 
 [![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/condescending-tristan-p6pouc?file=%2Fsrc%2FApp.tsx&selection=%5B%7B%22endColumn%22%3A18%2C%22endLineNumber%22%3A44%2C%22startColumn%22%3A18%2C%22startLineNumber%22%3A44%7D%5D)
 
-## usePagination hook:
+<br/>
+
+## How to use?
+
+> ## usePagination hook:
 
 ### Parameters: a single object Parameter with these props:
 
@@ -132,8 +220,35 @@ function App() {
 | `numberOfPages`     | `Number` | The computed number of total pages that should be rendered, depending on the passed items array length |
 
 <br/>
+<br/>
 
-## Pagination Component:
+
+> ## useServerPagination hook:
+
+### Parameters: a single object Parameter with these props:
+
+| Name                | Type     | Description                                                                    |
+| ------------------- | -------- | ------------------------------------------------------------------------------ |
+| `url`             | `string`  | **Required:** The endpoint for your Api (without the search quries).                   |
+| `searchParams`      | `Object` | **Required:** an object that contains The search queries for your Api. <br/> **page**: a string that tells the server which page number you want to retrieve. <br/> **perPage**: a string that tells the server how many items to retrieve for each page}`
+| `initialPageNumber` | `Number` | **Optional:** The initial page selected. <br/> Default is 1                    |
+| `ItemsPerPage`      | `Number` | **Required:** The number of items to display on each page. <br/> Default is 10 |
+
+
+### Returns: an Object with these props:
+
+| Name                | Type     | Description                                                                                            |
+| ------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
+| `isLoading`         | `Boolean`  | A boolean that presents the state of of the request                                          |
+| `isError`     | `Boolean` | A boolean that indicates if error accured or not while fetching the page |
+| `error`     | `object` | A standard error object that changes for each page request |
+| `currentPageNumber` | `Number` | The page number state                                                                                  |
+
+
+<br/>
+<br/>
+
+> ## Pagination Component:
 
 ### Props:
 
@@ -183,12 +298,12 @@ Open your browser and go to [http://127.0.0.1:5173/src/demo/index.html](http://1
 
 Run the tests
 
-```bash
+```sh    
 npm run test | yarn test
 ```
 
 Run the tests in the browser with nice UI presentation
 
-```bash
+```sh
 npm run test:ui | yarn test:ui
 ```
