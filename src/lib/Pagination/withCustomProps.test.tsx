@@ -2,7 +2,7 @@ import Pagination, { type Props } from '.';
 import { render, renderHook, screen, userEvent } from '@/lib/test_setup';
 import { listenFor } from '../utils';
 import { useState } from 'react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, beforeEach } from 'vitest';
 
 const {
   result: {
