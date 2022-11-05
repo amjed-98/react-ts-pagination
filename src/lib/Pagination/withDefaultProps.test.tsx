@@ -1,7 +1,7 @@
 import Pagination from '.';
 import { render, screen, userEvent } from '@/lib/test_setup';
 import { dispatchEvent, listenFor } from '../utils';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, beforeEach } from 'vitest';
 
 const utilsModule = await import('../utils');
 const currentPageNumber = 3;

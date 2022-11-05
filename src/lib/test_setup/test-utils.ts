@@ -7,7 +7,6 @@ const customRender = (ui: React.ReactElement, options: RenderOptions = {}) => re
 export const arrayOf = (length: number) => Array.from({ length });
 
 export * from '@testing-library/react';
-
 export { default as userEvent } from '@testing-library/user-event';
 export { customRender as render };
 export { renderHook, act } from '@testing-library/react-hooks';

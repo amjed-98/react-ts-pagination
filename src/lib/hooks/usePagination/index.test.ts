@@ -1,7 +1,7 @@
 import usePagination from '@/lib/hooks/usePagination';
 import { DUMMY_ITEMS, renderHook, arrayOf } from '@/lib/test_setup';
-import { describe } from 'vitest';
-import { dispatchEvent } from '../utils';
+import { describe, beforeEach, it, expect } from 'vitest';
+import { dispatchEvent } from '@/lib/utils';
 
 const FIRST_TEN_ITEMS = DUMMY_ITEMS.slice(0, 10);
 const FIRST_FIVE_ITEMS = DUMMY_ITEMS.slice(0, 5);
@@ -38,9 +38,9 @@ describe('usePagination', () => {
   });
 
   describe('when passing items array of a certain length', () => {
-    it('should return the value 2 as the numberOfPages when passing items array', () => {
+    it('should return the value 5 as the numberOfPages when passing items array', () => {
       const { result } = renderHook(() => usePagination({ items: DUMMY_ITEMS }));
-      expect(result.current.numberOfPages).toEqual(2);
+      expect(result.current.numberOfPages).toEqual(5);
     });
 
     it('should return the value 3 as the numberOfPages when passing array of 30 length', () => {
@@ -49,8 +49,8 @@ describe('usePagination', () => {
     });
 
     it('should return the value 5 as the numberOfPages when passing array of 50 length', () => {
-      const { result } = renderHook(() => usePagination({ items: arrayOf(50) }));
-      expect(result.current.numberOfPages).toEqual(5);
+      const { result } = renderHook(() => usePagination({ items: arrayOf(60) }));
+      expect(result.current.numberOfPages).toEqual(6);
     });
 
     it('should return the value 10 as the numberOfPages when passing array of 100 length', () => {
