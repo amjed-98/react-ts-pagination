@@ -1,10 +1,13 @@
-import items from '@/demo/items';
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 
-type Props = { pageItems: typeof items };
+type Props = {
+  children: ReactNode;
+  tableHeaders?: string[];
+};
 
-const Table: FC<Props> = ({ pageItems }) => {
-  const tableHeaders = ['id', 'First name', 'Last name', 'email', 'Phone'];
+const Table: FC<Props> = (props) => {
+  const { children, tableHeaders = ['id', 'First name', 'Last name', 'email', 'Phone'] } = props;
+
   return (
     <table>
       <thead>
@@ -15,19 +18,7 @@ const Table: FC<Props> = ({ pageItems }) => {
         </tr>
       </thead>
 
-      <tbody>
-        {pageItems?.map((page) => {
-          return (
-            <tr key={page.id}>
-              <td>{page.id}</td>
-              <td>{page.first_name}</td>
-              <td>{page.last_name}</td>
-              <td>{page.email}</td>
-              <td>{page.phone}</td>
-            </tr>
-          );
-        })}
-      </tbody>
+      <tbody>{children}</tbody>
     </table>
   );
 };
