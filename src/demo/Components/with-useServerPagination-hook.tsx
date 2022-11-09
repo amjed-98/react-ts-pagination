@@ -3,8 +3,8 @@ import Table from './Table';
 import Skeleton from './Skeleton';
 import '@/demo/index.css';
 
-const numberOfPages = 6;
-const itemsPerPage = 5;
+const numberOfPages = 50;
+const itemsPerPage = 10;
 const url = 'https://api.github.com/orgs/GSG-G11/repos';
 const searchParams = { page: 'page', perPage: 'per_page' };
 
@@ -13,12 +13,8 @@ function With_usePagination_Hook() {
     pageItems = [],
     isLoading,
     currentPageNumber,
-  } = useServerPagination<Repo[]>({
-    url,
-    searchParams,
-    itemsPerPage,
-    numberOfPages,
-  });
+    handlePageChange,
+  } = useServerPagination<Repo[]>({ url, searchParams, itemsPerPage, numberOfPages });
 
   const tableHeaders = ['id', 'name', 'owner', 'description', 'private'];
 
@@ -39,7 +35,11 @@ function With_usePagination_Hook() {
           ))}
         </Table>
       )}
-      <Pagination currentPageNumber={currentPageNumber} numberOfPages={numberOfPages} />
+      <Pagination
+        currentPageNumber={currentPageNumber}
+        numberOfPages={numberOfPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }

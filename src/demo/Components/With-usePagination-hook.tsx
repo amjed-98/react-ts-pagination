@@ -3,7 +3,10 @@ import { usePagination, Pagination } from '@/lib';
 import Table from './Table';
 
 function With_usePagination_Hook() {
-  const { currentPageNumber, pageItems, numberOfPages } = usePagination({ items, itemsPerPage: 8 });
+  const { currentPageNumber, pageItems, numberOfPages, handlePageChange } = usePagination({
+    items,
+    itemsPerPage: 8,
+  });
 
   return (
     <div className='App'>
@@ -19,7 +22,11 @@ function With_usePagination_Hook() {
         ))}
       </Table>
 
-      <Pagination currentPageNumber={currentPageNumber} numberOfPages={numberOfPages} />
+      <Pagination
+        currentPageNumber={currentPageNumber}
+        numberOfPages={numberOfPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }

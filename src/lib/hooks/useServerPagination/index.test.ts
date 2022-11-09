@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import useServerPagination from '.';
 import { DUMMY_ITEMS, renderHook, setupServer } from '@/lib/test_setup';
-import { dispatchEvent } from '@/lib/utils';
 
 const itemsPerPage = 10;
 const initialPageNumber = 1;
@@ -45,12 +44,12 @@ describe('useServerPagination', () => {
   });
 
   it('should fetch another page when pageChange event is dispatched', async () => {
-    const dispatchedPageNumber = 2;
+    const changedPageNumber = 2;
 
     const server = setupServer({
       endpoint: url,
       itemsPerPage,
-      pageNumber: dispatchedPageNumber,
+      pageNumber: changedPageNumber,
     });
     server.listen();
 
@@ -64,15 +63,15 @@ describe('useServerPagination', () => {
       }),
     );
 
-    const start = (dispatchedPageNumber - 1) * itemsPerPage;
-    const end = dispatchedPageNumber * itemsPerPage;
-
-    const expected = DUMMY_ITEMS.slice(start, end);
-
-    dispatchEvent('pageChange', dispatchedPageNumber);
+    result.current.handlePageChange(changedPageNumber, undefined);
 
     expect(result.current.isLoading).toBe(true);
     await waitForNextUpdate();
+
+    const start = (changedPageNumber - 1) * itemsPerPage;
+    const end = changedPageNumber * itemsPerPage;
+
+    const expected = DUMMY_ITEMS.slice(start, end);
 
     expect(result.current.pageItems).toEqual(expected);
     expect(result.current.currentPageNumber).toBe(2);

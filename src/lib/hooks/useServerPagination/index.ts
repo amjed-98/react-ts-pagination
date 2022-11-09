@@ -1,5 +1,4 @@
-import { listenFor } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import useFetch from '../useFetch';
 
 type FetchError = null | Error | { message: string };
@@ -10,6 +9,7 @@ type ReturnType<PageItems extends unknown[]> = {
   error: FetchError;
   pageItems: PageItems | undefined;
   currentPageNumber: number;
+  handlePageChange: (pageNumber: number, pageRef: HTMLSpanElement | undefined) => void;
 };
 
 type Parameters = {
@@ -34,7 +34,7 @@ const useServerPagination = <PageItems extends unknown[]>({
 
   const { data: pageItems, error, isError, isLoading } = useFetch<PageItems>(paginationUrl.href);
 
-  const handleCurrentPageNumber = ({ detail: pageNumber }: CustomEvent<number>): void => {
+  const handlePageChange = useCallback((pageNumber: number): void => {
     const FIRST_PAGE_NUMBER = 1;
     const LAST_PAGE_NUMBER = numberOfPages;
 
@@ -44,9 +44,7 @@ const useServerPagination = <PageItems extends unknown[]>({
     if (isFirstPage || isLastPage) return;
 
     setCurrentPageNumber(pageNumber);
-  };
-
-  useEffect(() => listenFor('pageChange', handleCurrentPageNumber), []);
+  }, []);
 
   return {
     isLoading,
@@ -54,6 +52,7 @@ const useServerPagination = <PageItems extends unknown[]>({
     error,
     pageItems,
     currentPageNumber,
+    handlePageChange,
   };
 };
 

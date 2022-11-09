@@ -1,12 +1,6 @@
 import type { FC, JSXElementConstructor, CSSProperties } from 'react';
-import { useCallback, useEffect, useRef } from 'react';
-import {
-  dispatchEvent,
-  getPageRef,
-  listenFor,
-  scrollToPage,
-  handleMouseWheelScroll,
-} from '@/lib/utils';
+import { useCallback, useRef } from 'react';
+import { getPageRef, scrollToPage, handleMouseWheelScroll } from '@/lib/utils';
 import Button from './components/Button';
 import Pages from './components/Pages';
 import './index.css';
@@ -14,7 +8,7 @@ import './index.css';
 export type Props = {
   currentPageNumber: number;
   numberOfPages: number;
-  onPageChange?: (pageNumber: number, pageRef: HTMLSpanElement | undefined) => void;
+  onPageChange: (pageNumber: number, pageRef: HTMLSpanElement | undefined) => void;
   paginationContainerClass?: string;
   pagesContainerClass?: string;
   nextLabel?: string | JSXElementConstructor<Record<string, never>>;
@@ -47,25 +41,11 @@ const Pagination: FC<Props> = (props) => {
   const pagesRef = useRef<HTMLDivElement>(null);
 
   const handlePageChange = useCallback((pageNumber: number): void => {
-    /*
-      ? if pass  onPageChange handler function then will use it
-      ? else will use the default handler that is in usePagination hook
-    */
-    if (onPageChange) {
-      const pageRef = getPageRef(pagesRef, pageNumber);
+    const pageRef = getPageRef(pagesRef, pageNumber);
 
-      onPageChange(pageNumber, pageRef);
-      pageRef?.scrollIntoView({ behavior: 'smooth' });
-    } else dispatchEvent('pageChange', pageNumber);
+    onPageChange(pageNumber, pageRef);
+    scrollToPage(pagesRef, pageNumber);
   }, []);
-
-  useEffect(
-    () =>
-      listenFor<number>('pageChange', ({ detail: pageNumber }) =>
-        scrollToPage(pagesRef, pageNumber),
-      ),
-    [],
-  );
 
   return (
     <div className={paginationContainerClass} onWheel={handleMouseWheelScroll} role='pagination'>

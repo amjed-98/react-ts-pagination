@@ -10,7 +10,6 @@ By installing the package you'll have this default pagination look, but you can 
 
 <img src="https://i.imgur.com/ru9GoMQ.png" alt="Pagination demo 2" />
 
-
 #### Note: if you want to have the default styles, you must import the styles file `"import 'ts-react-pagination/styles.css'"`. else you'll have to style everything using your own classes or style.
 
 ## why ts-react-pagination
@@ -38,18 +37,17 @@ yarn add ts-react-pagination
 
 ## Usage
 
-
-* ### With usePagination Hook:
+- ### With usePagination Hook:
 
 ```jsx
 import { Pagination, usePagination } from 'ts-react-pagination';
 import 'ts-react-pagination/styles.css';
 
 function App() {
-  const {
-      currentPageNumber, pageItems, numberOfPages 
-  } = usePagination({ items, itemsPerPage: 8 });
-
+  const { currentPageNumber, pageItems, numberOfPages, handlePageChange } = usePagination({
+    items,
+    itemsPerPage: 8,
+  });
 
   return (
     <div className='App'>
@@ -65,15 +63,15 @@ function App() {
         ))}
       </Table>
 
-      <Pagination 
-          currentPageNumber={currentPageNumber} 
-          numberOfPages={numberOfPages} 
-        />
+      <Pagination
+        currentPageNumber={currentPageNumber}
+        numberOfPages={numberOfPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }
 ```
-
 
 [![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/crimson-cherry-5emhj9?file=%2Fsrc%2FApp.tsx&selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A9%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A9%7D%5D)
 
@@ -81,8 +79,8 @@ function App() {
 
 <br/>
 
-* ### With useServerPagination Hook:
-***Note:* this hook is only used when your Api supports server pagination.**
+- ### With useServerPagination Hook:
+  **_Note:_ this hook is only used when your Api supports server pagination.**
 
 ```jsx
 import { Pagination, useServerPagination } from 'ts-react-pagination';
@@ -93,6 +91,7 @@ function App() {
     pageItems,
     isLoading,
     currentPageNumber,
+    handlePageChange
   } = useServerPagination<Repo[]>({
     url: 'https://api.github.com/orgs/GSG-G11/repos',
     searchParams: { page: 'page', perPage: 'per_page' },
@@ -118,16 +117,16 @@ function App() {
           ))}
         </Table>
       )}
-          
-      <Pagination 
-          currentPageNumber={currentPageNumber} 
-          numberOfPages={numberOfPages} 
+
+      <Pagination
+          currentPageNumber={currentPageNumber}
+          numberOfPages={numberOfPages}
+          onPageChange={handlePageChange}
         />
     </div>
   );
 }
 ```
-
 
 [![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/kind-payne-q4qhdh?file=%2Fsrc%2FApp.tsx&selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A24%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A24%7D%5D)
 
@@ -135,8 +134,7 @@ function App() {
 
 <br/>
 
-* ### Passing your own custom props:
-
+- ### Passing your own custom props:
 
 ```jsx
 import { Pagination } from 'ts-react-pagination';
@@ -146,7 +144,7 @@ const ITEMS_PER_PAGE = 10;
 const numberOfPages = Math.ceil(items.length / ITEMS_PER_PAGE);
 
 function App() {
-  const [pageItems, setPageItems] = useState<typeof items>([]);
+  const [pageItems, setPageItems] = useState < typeof items > [];
   const currentPageNumber = useRef(1);
 
   const handlePageChange = (pageNumber: number, pageRef: HTMLSpanElement | undefined) => {
@@ -213,37 +211,36 @@ function App() {
 
 ### Returns: an Object with these props:
 
-| Name                | Type     | Description                                                                                            |
-| ------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
-| `pageItems`         | `Array`  | The current items state, for the current page number selected                                          |
-| `currentPageNumber` | `Number` | The page number state                                                                                  |
-| `numberOfPages`     | `Number` | The computed number of total pages that should be rendered, depending on the passed items array length |
+| Name                | Type      | Description                                                                                                 |
+| ------------------- | --------- | ----------------------------------------------------------------------------------------------------------- |
+| `pageItems`         | `Array`   | The current items state, for the current page number selected                                               |
+| `currentPageNumber` | `Number`  | The page number state                                                                                       |
+| `numberOfPages`     | `Number`  | The computed number of total pages that should be rendered, depending on the passed items array length      |
+| `handlePageChange`  | `Funtion` | the handler function to handle changing pages, it expects pageNumber and pageRef to be passed as parameters |
 
 <br/>
 <br/>
-
 
 > ## useServerPagination hook:
 
 ### Parameters: a single object Parameter with these props:
 
-| Name                | Type     | Description                                                                    |
-| ------------------- | -------- | ------------------------------------------------------------------------------ |
-| `url`             | `string`  | **Required:** The endpoint for your Api (without the search quries).                   |
-| `searchParams`      | `Object` | **Required:** an object that contains The search queries for your Api. <br/> **page**: a string that tells the server which page number you want to retrieve. <br/> **perPage**: a string that tells the server how many items to retrieve for each page}`
-| `initialPageNumber` | `Number` | **Optional:** The initial page selected. <br/> Default is 1                    |
-| `ItemsPerPage`      | `Number` | **Required:** The number of items to display on each page. <br/> Default is 10 |
-
+| Name                | Type     | Description                                                                                                                                                                                                                                                |
+| ------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `url`               | `string` | **Required:** The endpoint for your Api (without the search quries).                                                                                                                                                                                       |
+| `searchParams`      | `Object` | **Required:** an object that contains The search queries for your Api. <br/> **page**: a string that tells the server which page number you want to retrieve. <br/> **perPage**: a string that tells the server how many items to retrieve for each page}` |
+| `initialPageNumber` | `Number` | **Optional:** The initial page selected. <br/> Default is 1                                                                                                                                                                                                |
+| `ItemsPerPage`      | `Number` | **Required:** The number of items to display on each page. <br/> Default is 10                                                                                                                                                                             |
 
 ### Returns: an Object with these props:
 
-| Name                | Type     | Description                                                                                            |
-| ------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
-| `isLoading`         | `Boolean`  | A boolean that presents the state of of the request                                          |
-| `isError`     | `Boolean` | A boolean that indicates if error accured or not while fetching the page |
-| `error`     | `object` | A standard error object that changes for each page request |
-| `currentPageNumber` | `Number` | The page number state                                                                                  |
-
+| Name                | Type      | Description                                                                                                 |
+| ------------------- | --------- | ----------------------------------------------------------------------------------------------------------- |
+| `isLoading`         | `Boolean` | A boolean that presents the state of of the request                                                         |
+| `isError`           | `Boolean` | A boolean that indicates if error accured or not while fetching the page                                    |
+| `error`             | `object`  | A standard error object that changes for each page request                                                  |
+| `currentPageNumber` | `Number`  | The page number state                                                                                       |
+| `handlePageChange`  | `Funtion` | the handler function to handle changing pages, it expects pageNumber and pageRef to be passed as parameters |
 
 <br/>
 <br/>
@@ -252,21 +249,21 @@ function App() {
 
 ### Props:
 
-| Name                       | Type                                | Description                                                                                                                                                                                                                                                                                                                            |
-| -------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `currentPageNumber`        | `Number`                            | **Required:** The current page number state. <br/> You can either get it from usePagination hook or you can pass you own currentPageNumber state.                                                                                                                                                                                      |
-| `numberOfPages`            | `Number`                            | **Required:** The number of total pages that should be generated. <br/> You can either get it from usePagination hook or you can pass you own numberOfPages state.                                                                                                                                                                     |
-| `onPageChange`             | `Function: (page,pageRef)=>{}`      | **Optional:** the handler function to handle changing pages, it gets passed the currentPageNumber and the the dom reference for current page. <br/> **_Note:_** this is an optinal property, the package already handles changing pages out of the box, but incase you wanted to handle changing pages with your own function handler. |
-| `nextLabel`                | `String or Refrence to A Component` | **Optional:** The next button text label. <br/> Default is : `❯`                                                                                                                                                                                                                                                                       |
-| `nextBtnClass`             | `String`                            | **Optional:** A class name to apply to the next button. <br/> Default is `btn`                                                                                                                                                                                                                                                         |
-| `prevLabel `               | `String or Refrence to A Component` | **Optional:** The prev button text label. <br/> Default is : `❮`                                                                                                                                                                                                                                                                       |
-| `prevBtnClass`             | `String`                            | **Optional:** A class name to apply to the prev button. <br/> Default is `btn`                                                                                                                                                                                                                                                         |
-| `pageStyle`                | `Object`                            | **Optional:** The defualt page style object with color and backgroundColor properties. <br/> Default is:`undefined`                                                                                                                                                                                                                    |
-| `activePageSyle`           | `Object`                            | **Optional:** The acitve page style object with color and background propeties. <br/> Default is `undefined`                                                                                                                                                                                                                           |
-| `pageClass`                | `String`                            | **Optional:** A class name to apply to each page. <br/> The default class is `page`                                                                                                                                                                                                                                                    |
-| `activePageClass`          | `String`                            | **Optional:** A class name to to apply to the current acitve page or the page that being hovered. <br/> Default is `active-page`                                                                                                                                                                                                       |
-| `paginationContainerClass` | `String`                            | **Optional:** A class name to apply to the parent container for the whole component. <br/> Default is `pagination`                                                                                                                                                                                                                     |
-| `pagesContianerClass`      | `String`                            | **Optional:** A class name to apply to the direct parent of the pages. <br/> Default is `pages`                                                                                                                                                                                                                                        |
+| Name                       | Type                                | Description                                                                                                                                                        |
+| -------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `currentPageNumber`        | `Number`                            | **Required:** The current page number state. <br/> You can either get it from usePagination hook or you can pass you own currentPageNumber state.                  |
+| `numberOfPages`            | `Number`                            | **Required:** The number of total pages that should be generated. <br/> You can either get it from usePagination hook or you can pass you own numberOfPages state. |
+| `onPageChange`             | `Function: (page,pageRef)=>{}`      | **Required:** the handler function to handle changing pages, it gets passed the currentPageNumber and the the dom reference for current page.                      |
+| `nextLabel`                | `String or Refrence to A Component` | **Optional:** The next button text label. <br/> Default is : `❯`                                                                                                   |
+| `nextBtnClass`             | `String`                            | **Optional:** A class name to apply to the next button. <br/> Default is `btn`                                                                                     |
+| `prevLabel `               | `String or Refrence to A Component` | **Optional:** The prev button text label. <br/> Default is : `❮`                                                                                                   |
+| `prevBtnClass`             | `String`                            | **Optional:** A class name to apply to the prev button. <br/> Default is `btn`                                                                                     |
+| `pageStyle`                | `Object`                            | **Optional:** The defualt page style object with color and backgroundColor properties. <br/> Default is:`undefined`                                                |
+| `activePageSyle`           | `Object`                            | **Optional:** The acitve page style object with color and background propeties. <br/> Default is `undefined`                                                       |
+| `pageClass`                | `String`                            | **Optional:** A class name to apply to each page. <br/> The default class is `page`                                                                                |
+| `activePageClass`          | `String`                            | **Optional:** A class name to to apply to the current acitve page or the page that being hovered. <br/> Default is `active-page`                                   |
+| `paginationContainerClass` | `String`                            | **Optional:** A class name to apply to the parent container for the whole component. <br/> Default is `pagination`                                                 |
+| `pagesContianerClass`      | `String`                            | **Optional:** A class name to apply to the direct parent of the pages. <br/> Default is `pages`                                                                    |
 
 ## Demo
 
@@ -298,7 +295,7 @@ Open your browser and go to [http://127.0.0.1:5173/src/demo/index.html](http://1
 
 Run the tests
 
-```sh    
+```sh
 npm run test | yarn test
 ```
 

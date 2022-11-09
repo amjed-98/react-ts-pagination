@@ -1,14 +1,9 @@
 import usePagination from '@/lib/hooks/usePagination';
 import { DUMMY_ITEMS, renderHook, arrayOf } from '@/lib/test_setup';
-import { describe, beforeEach, it, expect } from 'vitest';
-import { dispatchEvent } from '@/lib/utils';
+import { describe, it, expect } from 'vitest';
 
 const FIRST_TEN_ITEMS = DUMMY_ITEMS.slice(0, 10);
 const FIRST_FIVE_ITEMS = DUMMY_ITEMS.slice(0, 5);
-
-beforeEach(() => {
-  dispatchEvent('pageChange', 1);
-});
 
 describe('usePagination', () => {
   describe('when not passing values for itemsPerPage and initialPageNumber parameters', () => {
@@ -60,17 +55,18 @@ describe('usePagination', () => {
   });
 
   describe('when dispatching pageChange event', () => {
-    it('should increment currentPageNumber and return ', () => {
+    it('should increment currentPageNumber and return the correct pageItems', async () => {
       const { result } = renderHook(() => usePagination({ items: DUMMY_ITEMS }));
-      const dispatchedPageNumber = 2;
+      const changedPageNumber = 2;
       const defaultNumberOfPages = 10;
-      dispatchEvent('pageChange', dispatchedPageNumber);
 
-      const start = (dispatchedPageNumber - 1) * defaultNumberOfPages;
-      const end = dispatchedPageNumber * defaultNumberOfPages;
+      result.current.handlePageChange(changedPageNumber, undefined);
+
+      const start = (changedPageNumber - 1) * defaultNumberOfPages;
+      const end = changedPageNumber * defaultNumberOfPages;
       const expectedPageItems = DUMMY_ITEMS.slice(start, end);
 
-      expect(result.current.currentPageNumber).toBe(dispatchedPageNumber);
+      expect(result.current.currentPageNumber).toBe(changedPageNumber);
       expect(result.current.pageItems).toEqual(expectedPageItems);
     });
   });

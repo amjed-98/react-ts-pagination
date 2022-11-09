@@ -1,10 +1,10 @@
-import { listenFor } from '@/lib/utils';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type ReturnType<PageItem> = {
   pageItems: PageItem[];
   currentPageNumber: number;
   numberOfPages: number;
+  handlePageChange: (pageNumber: number, pageRef: HTMLSpanElement | undefined) => void;
 };
 
 type Parameters<PageItem> = {
@@ -18,13 +18,16 @@ const usePagination = <PageItem>({
   itemsPerPage = 10,
   items,
 }: Parameters<PageItem>): ReturnType<PageItem> => {
+  const numberOfPages = Math.ceil(items.length / itemsPerPage);
+
   if (initialPageNumber <= 0) console.error('initial page Number must be greater than 0');
+  if (initialPageNumber > numberOfPages)
+    console.error('initial page Number must be less than the number of pages');
 
   const [pageItems, setPageItems] = useState<PageItem[]>([]);
   const currentPageNumber = useRef(initialPageNumber);
-  const numberOfPages = Math.ceil(items.length / itemsPerPage);
 
-  const handlePageChange = ({ detail: pageNumber }: CustomEvent<number>): void => {
+  const handlePageChange = useCallback((pageNumber: number): void => {
     const FIRST_PAGE_NUMBER = 1;
     const LAST_PAGE_NUMBER = numberOfPages;
 
@@ -38,20 +41,19 @@ const usePagination = <PageItem>({
 
     currentPageNumber.current = pageNumber;
     setPageItems(items.slice(start, end));
-  };
+  }, []);
 
   useEffect(() => {
     const start = (currentPageNumber.current - 1) * itemsPerPage;
     const end = currentPageNumber.current * itemsPerPage;
     setPageItems(items.slice(start, end));
-
-    return listenFor('pageChange', handlePageChange);
   }, []);
 
   return {
     pageItems,
     currentPageNumber: currentPageNumber.current,
     numberOfPages,
+    handlePageChange,
   };
 };
 
