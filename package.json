@@ -1,6 +1,6 @@
 {
   "name": "ts-react-pagination",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "type": "module",
   "author": "Amjad Yahia",
   "description": "A ReactJS Component that creates pagination in a declarative and simple way",
