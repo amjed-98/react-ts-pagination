@@ -1,5 +1,5 @@
 {
-  "name": "ts-react-pagination",
+  "name": "react-ts-pagination",
   "version": "0.0.8",
   "type": "module",
   "author": "Amjad Yahia",
@@ -33,10 +33,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/amjed-98/ts-react-pagination"
+    "url": "https://github.com/amjed-98/react-ts-pagination"
   },
   "bugs": {
-    "url": "https://github.com/amjed-98/ts-react-pagination/issues"
+    "url": "https://github.com/amjed-98/react-ts-pagination/issues"
   },
   "scripts": {
     "demo": "vite",
