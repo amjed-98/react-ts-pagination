@@ -1,6 +1,6 @@
 {
-  "name": "ts-react-pagination",
-  "version": "0.0.8",
+  "name": "react-ts-pagination",
+  "version": "0.1.0",
   "type": "module",
   "author": "Amjad Yahia",
   "description": "A ReactJS Component that creates pagination in a declarative and simple way",
@@ -33,10 +33,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/amjed-98/ts-react-pagination"
+    "url": "https://github.com/amjed-98/react-ts-pagination"
   },
   "bugs": {
-    "url": "https://github.com/amjed-98/ts-react-pagination/issues"
+    "url": "https://github.com/amjed-98/react-ts-pagination/issues"
   },
   "scripts": {
     "demo": "vite",
