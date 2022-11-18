@@ -10,16 +10,14 @@ By installing the package you'll have this default pagination look, but you can 
 
 <img src="https://i.imgur.com/ru9GoMQ.png" alt="Pagination demo 2" />
 
-#### Note: if you want to have the default styles, you must import the styles file `"import 'react-ts-pagination
-
-/styles.css'"`. else you'll have to style everything using your own classes or style.
+#### Note: if you want to have the default styles, you must import the styles file `"import 'react-ts-pagination/styles.css'"`. else you'll have to style everything using your own classes or style.
 
 ## why react-ts-pagination
 
 - This package supports Typescript out of the box, so no need for `npm install @types/react-ts-pagination .`
-- Exposes a two hooks`usePagination`, `useServerPagination` that take cares of all the boilerplate for handling pagination states all in one line.
-- Heavlly tested for all possible edge cases and prone to future error, so releasing a broken version of this package is highlly unlikely.
-- Strongly typed using advanced typescript to narrow down your types and avoid passing wrong prop or parameter type, which gives you nice auto-completion.
+- Exposes two hooks`usePagination`, `useServerPagination` that take cares of all the boilerplate for handling pagination states all in one line.
+- Heavily tested for all possible edge cases and immune to future errors, so releasing a broken version of this package is highly unlikely.
+- Strongly typed using advanced typescript to narrow down your types and avoid passing the wrong prop or parameter type, which gives you nice auto-completion.
 
 ## Installation
 
@@ -44,10 +42,8 @@ yarn add react-ts-pagination
 - ### With usePagination Hook:
 
 ```jsx
-import { Pagination, usePagination } from 'react-ts-pagination
-';
-import 'react-ts-pagination
-/styles.css';
+import { Pagination, usePagination } from 'react-ts-pagination';
+import 'react-ts-pagination/styles.css';
 
 function App() {
   const { currentPageNumber, pageItems, numberOfPages, handlePageChange } = usePagination({
@@ -89,10 +85,8 @@ function App() {
   **_Note:_ this hook is only used when your Api supports server pagination.**
 
 ```jsx
-import { Pagination, useServerPagination } from 'react-ts-pagination
-';
-import 'react-ts-pagination
-/styles.css';
+import { Pagination, useServerPagination } from 'react-ts-pagination';
+import 'react-ts-pagination/styles.css';
 
 function App() {
   const {
@@ -145,10 +139,8 @@ function App() {
 - ### Passing your own custom props:
 
 ```jsx
-import { Pagination } from 'react-ts-pagination
-';
-import 'react-ts-pagination
-/styles.css';
+import { Pagination } from 'react-ts-pagination';
+import 'react-ts-pagination/styles.css';
 
 const ITEMS_PER_PAGE = 10;
 const numberOfPages = Math.ceil(items.length / ITEMS_PER_PAGE);
@@ -280,8 +272,7 @@ function App() {
 To run the demo locally, clone the repository and move into it:
 
 ```sh
-git clone git@github.com:amjed-98/react-ts-pagination
-.git
+git clone git@github.com:amjed-98/react-ts-pagination.git
 cd react-ts-pagination
 
 ```

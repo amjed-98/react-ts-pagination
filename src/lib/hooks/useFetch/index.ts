@@ -1,15 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from 'react';
 
 type FetchError = null | Error | { message: string };
 
-type ReturnType<Data> = {
+type Returns<Data> = {
   isLoading: boolean;
   isError: boolean;
   error: FetchError;
   data: Data | undefined;
 };
 
-const useFetch = <Data>(url: string): ReturnType<Data> => {
+type Url = string;
+
+type Cache = {
+  [key: Url]: any;
+};
+
+const cache: Cache = Object.create(null); // prototype-less object
+
+const useFetch = <Data>(url: Url, cacheEnabled: boolean): Returns<Data> => {
   const [error, setError] = useState<FetchError>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<Data>();
@@ -20,16 +29,25 @@ const useFetch = <Data>(url: string): ReturnType<Data> => {
     abortControllerRef.current = controller;
 
     try {
-      setIsLoading(true);
-      const response = await fetch(url, { signal: abortControllerRef.current.signal });
-      const parsedResponse = await response.json();
+      const cachedResponse = cache[url];
 
-      if (!response.ok) {
-        return Promise.reject(parsedResponse);
+      if (cachedResponse && cacheEnabled) {
+        setIsLoading(false);
+        setError(null);
+        return setData(cache[url]);
       }
 
+      setIsLoading(true);
+      const response = await fetch(url, { signal: abortControllerRef.current.signal });
+      const parsedResponse: unknown = await response.json();
+
+      if (!isResponseOk<Data>(response, parsedResponse)) return Promise.reject(parsedResponse);
+
       setError(null);
-      setData(parsedResponse as Data);
+
+      if (cacheEnabled) cache[url] = parsedResponse;
+
+      setData(parsedResponse);
     } catch (err) {
       if (err instanceof Error) return setError(err);
 
@@ -47,7 +65,7 @@ const useFetch = <Data>(url: string): ReturnType<Data> => {
       setData(undefined);
       abortControllerRef.current?.abort();
     };
-  }, [url]);
+  }, []);
 
   return {
     isError: !!error,
@@ -58,3 +76,10 @@ const useFetch = <Data>(url: string): ReturnType<Data> => {
 };
 
 export default useFetch;
+
+const isResponseOk = <Data>(
+  response: Response,
+  parsedResponse: unknown,
+): parsedResponse is Data => {
+  return response.ok;
+};
