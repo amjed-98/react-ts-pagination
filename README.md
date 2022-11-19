@@ -10,13 +10,17 @@ By installing the package you'll have this default pagination look, but you can 
 
 <img src="https://i.imgur.com/ru9GoMQ.png" alt="Pagination demo 2" />
 
-#### Note: if you want to have the default styles, you must import the styles file `"import 'react-ts-pagination/styles.css'"`. else you'll have to style everything using your own classes or style.
+#### Note: if you want to have the default styles, you must import the styles file `"import 'react-ts-pagination/styles.css'"`.
+
+else you'll have to style everything using your own classes or style.
 
 ## why react-ts-pagination
 
-- This package supports Typescript out of the box, so no need for `npm install @types/react-ts-pagination .`
-- Exposes two hooks`usePagination`, `useServerPagination` that take cares of all the boilerplate for handling pagination states all in one line.
-- Heavily tested for all possible edge cases and immune to future errors, so releasing a broken version of this package is highly unlikely.
+- Supports #typescript out of the box, so you can forget about` npm install @types/react-ts-pagination .`
+- Supports client-side pagination using `usePagination` hook.
+- Supports server-side pagination using `useServerPagination` hook.
+- Heavily tested using unit tests for all possible edge cases and is immune to future errors, so releasing a broken version of this package is highly unlikely.
+- highly flexible with the right amount of abstraction so you can use the package without the hooks and provide your own props and styles.
 - Strongly typed using advanced typescript to narrow down your types and avoid passing the wrong prop or parameter type, which gives you nice auto-completion.
 
 ## Installation
@@ -205,11 +209,11 @@ function App() {
 
 ### Parameters: a single object Parameter with these props:
 
-| Name                | Type     | Description                                                                    |
-| ------------------- | -------- | ------------------------------------------------------------------------------ |
-| `items`             | `Array`  | **Required:** The Array that you want the paginate on.                         |
-| `initialPageNumber` | `Number` | **Optional:** The initial page selected. <br/> Default is 1                    |
-| `ItemsPerPage`      | `Number` | **Optional:** the number of items to display on each page. <br/> Default is 10 |
+| Name                | Type     | Description                                                                        |
+| ------------------- | -------- | ---------------------------------------------------------------------------------- |
+| `items`             | `Array`  | **Required:** The Array that you want the paginate on.                             |
+| `initialPageNumber` | `Number` | **Optional:** The initial page selected. <br/> Default is **1**                    |
+| `ItemsPerPage`      | `Number` | **Optional:** the number of items to display on each page. <br/> Default is **10** |
 
 ### Returns: an Object with these props:
 
@@ -227,20 +231,21 @@ function App() {
 
 ### Parameters: a single object Parameter with these props:
 
-| Name                | Type     | Description                                                                                                                                                                                                                                                |
-| ------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `url`               | `string` | **Required:** The endpoint for your Api (without the search quries).                                                                                                                                                                                       |
-| `searchParams`      | `Object` | **Required:** an object that contains The search queries for your Api. <br/> **page**: a string that tells the server which page number you want to retrieve. <br/> **perPage**: a string that tells the server how many items to retrieve for each page}` |
-| `initialPageNumber` | `Number` | **Optional:** The initial page selected. <br/> Default is 1                                                                                                                                                                                                |
-| `ItemsPerPage`      | `Number` | **Required:** The number of items to display on each page. <br/> Default is 10                                                                                                                                                                             |
+| Name                | Type      | Description                                                                                                                                                                                                                                                |
+| ------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `url`               | `string`  | **Required:** The endpoint for your Api (without the search quries).                                                                                                                                                                                       |
+| `searchParams`      | `Object`  | **Required:** an object that contains The search queries for your Api. <br/> **page**: a string that tells the server which page number you want to retrieve. <br/> **perPage**: a string that tells the server how many items to retrieve for each page}` |
+| `initialPageNumber` | `Number`  | **Optional:** The initial page selected. <br/> Default is **1**                                                                                                                                                                                            |
+| `ItemsPerPage`      | `Number`  | **Required:** The number of items to display on each page. <br/> Default is **10**                                                                                                                                                                         |
+| `cacheEnabled`      | `Boolean` | **Optional:** enable responses to be cached <br/> Default is **true**                                                                                                                                                                                      |
 
 ### Returns: an Object with these props:
 
 | Name                | Type      | Description                                                                                                 |
 | ------------------- | --------- | ----------------------------------------------------------------------------------------------------------- |
 | `isLoading`         | `Boolean` | A boolean that presents the state of of the request                                                         |
-| `isError`           | `Boolean` | A boolean that indicates if error accured or not while fetching the page                                    |
-| `error`             | `object`  | A standard error object that changes for each page request                                                  |
+| `isError`           | `Boolean` | A boolean that indicates if error accured or not while fetching the page.                                   |
+| `error`             | `object`  | A standard error object if an error accured while fetching pages.                                           |
 | `currentPageNumber` | `Number`  | The page number state                                                                                       |
 | `handlePageChange`  | `Funtion` | the handler function to handle changing pages, it expects pageNumber and pageRef to be passed as parameters |
 
