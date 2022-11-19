@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterEach, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { renderHook, setupServer } from '@/lib/test_setup';
 import useFetch from '.';
 import { DUMMY_ITEMS } from '@/lib/test_setup';
@@ -11,9 +11,9 @@ url.searchParams.append('per_page', `${10}`);
 
 const server = setupServer(url.href);
 
-beforeAll(() => server.listen());
+beforeEach(() => server.listen());
 afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+afterEach(() => server.close());
 
 describe('useFetch hook', () => {
   it('should fetch data and return an object with isLoading,isError,error and data states', async () => {
@@ -35,7 +35,7 @@ describe('useFetch hook', () => {
     expect(result.current.data).toEqual(DUMMY_ITEMS.slice(0, 10));
   });
 
-  it('should not send a request and fetch the cache instead', async () => {
+  it('should not send a request and get the cache instead', async () => {
     const { result } = renderHook(() => useFetch<typeof DUMMY_ITEMS>(url.href, true));
     const fetchListener = vi.fn();
 
