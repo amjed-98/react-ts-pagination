@@ -1,4 +1,4 @@
-type EventType = keyof DocumentEventMap | 'pageChange';
+type EventType = keyof DocumentEventMap | 'pageChange' | 'fetch';
 type Listener<Payload> = (event: CustomEvent<Payload>) => void;
 
 const listenFor = <Payload>(eventType: EventType, listener: Listener<Payload>): (() => void) => {

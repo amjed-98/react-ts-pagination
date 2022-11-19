@@ -65,7 +65,7 @@ const useFetch = <Data>(url: Url, cacheEnabled: boolean): Returns<Data> => {
       setData(undefined);
       abortControllerRef.current?.abort();
     };
-  }, []);
+  }, [url]);
 
   return {
     isError: !!error,
