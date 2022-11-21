@@ -2,13 +2,10 @@ import Pagination from '.';
 import { render, screen, userEvent } from '@/lib/test_setup';
 import { describe, expect, it, beforeEach } from 'vitest';
 import { getPageRef } from '@/lib/utils';
-const utilsModule = await import('../utils');
 const currentPageNumber = 3;
 const numberOfPages = 6;
 
-const mockHandlePageChange = vi.fn(
-  (_pageNumber: number, _pageRef: HTMLSpanElement | undefined) => null,
-);
+const mockHandlePageChange = vi.fn(() => null);
 
 const pageContainer = { current: { children: [1, 2, 3, 4] } };
 const getRef = (pageNumber: number) => getPageRef(pageContainer as never, pageNumber);
@@ -62,16 +59,5 @@ describe('Pagination Component with default props', () => {
     await userEvent.click(pageFive);
 
     expect(mockHandlePageChange).toHaveBeenCalledWith(5, getRef(5));
-  });
-
-  it('should call scrollToPage function when handlePageChange function is invoked', async () => {
-    const scrollSpy = vi.spyOn(utilsModule, 'scrollToPage');
-
-    const nextButton = screen.getByText('❯');
-
-    await userEvent.click(nextButton);
-
-    const pagesRef = screen.getByRole('pagination').children[1];
-    expect(scrollSpy).toHaveBeenCalledWith({ current: pagesRef }, 4);
   });
 });

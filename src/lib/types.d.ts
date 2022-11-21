@@ -5,6 +5,6 @@ declare global {
     pageNumber: number;
     activePageClass: string;
     pageClass: string;
-    style: CSSProperties | undefined;
+    style: CSSProperties;
   };
 }

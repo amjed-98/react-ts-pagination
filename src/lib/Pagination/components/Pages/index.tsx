@@ -8,8 +8,8 @@ export type Props = {
   pageClass: string;
   activePageClass: string;
   pagesContainerClass: string;
-  pageStyle?: CSSProperties;
-  activePageStyle?: CSSProperties;
+  pageStyle: CSSProperties;
+  activePageStyle: CSSProperties;
   buildPageText: (pageNumber: number) => string | number;
 };
 

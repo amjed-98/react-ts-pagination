@@ -39,6 +39,7 @@ function With_usePagination_Hook() {
         currentPageNumber={currentPageNumber}
         numberOfPages={numberOfPages}
         onPageChange={handlePageChange}
+        buildPageText={(page) => `(${page})`}
       />
     </div>
   );

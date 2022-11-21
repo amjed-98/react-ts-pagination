@@ -1,6 +1,6 @@
 import type { FC, JSXElementConstructor, CSSProperties } from 'react';
 import { useCallback, useRef } from 'react';
-import { getPageRef, scrollToPage, handleMouseWheelScroll } from '@/lib/utils';
+import { getPageRef, handleMouseWheelScroll } from '@/lib/utils';
 import Button from './components/Button';
 import Pages from './components/Pages';
 import './index.css';
@@ -46,7 +46,7 @@ const Pagination: FC<Props> = (props) => {
     const pageRef = getPageRef(pagesRef, pageNumber);
 
     onPageChange(pageNumber, pageRef);
-    scrollToPage(pagesRef, pageNumber);
+    pageRef?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
   return (
