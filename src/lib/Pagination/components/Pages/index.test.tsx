@@ -13,6 +13,8 @@ const props: Props = {
   },
   buildPageText: (pageNumber) => `(${pageNumber})`,
   pagesContainerClass: 'page-container',
+  activePageStyle: {},
+  pageStyle: {},
 };
 
 describe('Page Component', () => {
