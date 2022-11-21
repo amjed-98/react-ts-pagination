@@ -9,27 +9,27 @@ exports[`Page Component > should match the pages snapshot 1`] = `
       <span
         class="page active"
       >
-        1
+        (1)
       </span>
       <span
         class="page"
       >
-        2
+        (2)
       </span>
       <span
         class="page"
       >
-        3
+        (3)
       </span>
       <span
         class="page"
       >
-        4
+        (4)
       </span>
       <span
         class="page"
       >
-        5
+        (5)
       </span>
     </div>
   </div>
