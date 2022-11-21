@@ -4,6 +4,7 @@ export type Props = {
   page: Page;
   currentPageNumber: number;
   handlePageChange: (pageNumber: number) => void;
+  buildPageText: (pageNumber: number) => string | number;
 };
 
 const Page: FC<Props> = (props) => {
@@ -11,6 +12,7 @@ const Page: FC<Props> = (props) => {
     page: { pageClass, activePageClass, pageNumber, style },
     handlePageChange,
     currentPageNumber,
+    buildPageText,
   } = props;
 
   const computedClasses = useMemo<string>(() => {
@@ -42,7 +44,7 @@ const Page: FC<Props> = (props) => {
       onMouseEnter={handleOnHoverClass}
       onMouseLeave={handleOnHoverClass}
     >
-      {pageNumber}
+      {buildPageText(pageNumber)}
     </span>
   );
 };

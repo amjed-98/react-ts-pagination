@@ -10,6 +10,7 @@ export type Props = {
   pagesContainerClass: string;
   pageStyle?: CSSProperties;
   activePageStyle?: CSSProperties;
+  buildPageText: (pageNumber: number) => string | number;
 };
 
 const Pages = forwardRef<HTMLDivElement, Props>((props, pagesRef) => {
@@ -22,6 +23,7 @@ const Pages = forwardRef<HTMLDivElement, Props>((props, pagesRef) => {
     activePageStyle,
     handlePageChange,
     pagesContainerClass,
+    buildPageText,
   } = props;
 
   const pages = useMemo<Page[]>(() => {
@@ -46,6 +48,7 @@ const Pages = forwardRef<HTMLDivElement, Props>((props, pagesRef) => {
           page={page}
           currentPageNumber={currentPageNumber}
           handlePageChange={handlePageChange}
+          buildPageText={buildPageText}
         />
       ))}
     </div>

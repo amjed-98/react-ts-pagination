@@ -11,6 +11,7 @@ const props: Props = {
   handlePageChange: () => {
     console.log('called');
   },
+  buildPageText: (pageNumber) => `(${pageNumber})`,
   pagesContainerClass: 'page-container',
 };
 

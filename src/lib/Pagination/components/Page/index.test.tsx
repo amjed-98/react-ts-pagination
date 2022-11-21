@@ -13,6 +13,8 @@ const props: Props = {
   handlePageChange: () => {
     console.count('called');
   },
+
+  buildPageText: (pageNumber) => pageNumber,
 };
 
 describe('Page Component', () => {

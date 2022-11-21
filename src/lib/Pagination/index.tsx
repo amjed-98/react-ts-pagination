@@ -19,14 +19,15 @@ export type Props = {
   pageClass?: string;
   activePageStyle?: CSSProperties;
   activePageClass?: string;
+  buildPageText?: (pageNumber: number) => string | number;
 };
 
 const Pagination: FC<Props> = (props) => {
   const {
     currentPageNumber,
     numberOfPages,
-    pageStyle,
-    activePageStyle,
+    pageStyle = {},
+    activePageStyle = {},
     pageClass = 'page',
     activePageClass = 'active-page',
     paginationContainerClass = 'pagination',
@@ -36,6 +37,7 @@ const Pagination: FC<Props> = (props) => {
     onPageChange,
     prevLabel = '❮',
     nextLabel = '❯',
+    buildPageText = (pageNumber) => pageNumber,
   } = props;
 
   const pagesRef = useRef<HTMLDivElement>(null);
@@ -65,6 +67,7 @@ const Pagination: FC<Props> = (props) => {
         activePageClass={activePageClass}
         handlePageChange={handlePageChange}
         pagesContainerClass={pagesContainerClass}
+        buildPageText={buildPageText}
       />
 
       <Button
