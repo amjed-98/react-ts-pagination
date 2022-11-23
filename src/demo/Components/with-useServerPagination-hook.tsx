@@ -1,26 +1,25 @@
-import { useServerPagination, Pagination } from '@/lib';
+import { useServerPagination, Pagination, Provider } from '@/lib';
 import Table from './Table';
 import Skeleton from './Skeleton';
 import '@/demo/index.css';
 
 const numberOfPages = 50;
-const itemsPerPage = 10;
-const url = 'https://api.github.com/orgs/GSG-G11/repos';
-const searchParams = { page: 'page', perPage: 'per_page' };
 
-function With_usePagination_Hook() {
-  const {
-    pageItems = [],
-    isLoading,
-    currentPageNumber,
-    handlePageChange,
-  } = useServerPagination<Repo[]>({ url, searchParams, itemsPerPage, numberOfPages });
+function With_useServerPagination_Hook() {
+  const fetchData = async (page: number) => {
+    const data = await (await fetch(`https://api.github.com/orgs/GSG-G11/repos?page=${page}&per_page=10`)).json();
+    return data;
+  };
+
+  const { pageItems, isFetching, currentPageNumber, handlePageChange } = useServerPagination<Repo[]>({
+    queryFunction: fetchData,
+  });
 
   const tableHeaders = ['id', 'name', 'owner', 'description', 'private'];
 
   return (
     <div className='App'>
-      {isLoading ? (
+      {isFetching ? (
         <Skeleton />
       ) : (
         <Table tableHeaders={tableHeaders}>
@@ -35,6 +34,7 @@ function With_usePagination_Hook() {
           ))}
         </Table>
       )}
+
       <Pagination
         currentPageNumber={currentPageNumber}
         numberOfPages={numberOfPages}
@@ -45,7 +45,11 @@ function With_usePagination_Hook() {
   );
 }
 
-export default With_usePagination_Hook;
+export default () => (
+  <Provider>
+    <With_useServerPagination_Hook />
+  </Provider>
+);
 
 interface Repo {
   id: number;

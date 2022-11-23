@@ -71,7 +71,7 @@ describe('Pagination Component  with custom props', () => {
 
     await userEvent.click(nextButton);
     const pageRef = screen.getByText(5);
-    expect(onPageChangeSpy).toHaveBeenCalledWith(5, pageRef);
+    expect(onPageChangeSpy).toHaveBeenCalledWith(5, pageRef, props.numberOfPages);
 
     expect(mockListener).not.toHaveBeenCalled();
   });
@@ -84,7 +84,7 @@ describe('Pagination Component  with custom props', () => {
     await userEvent.click(prevButton);
     const pageRef = screen.getByText(3);
 
-    expect(onPageChangeSpy).toHaveBeenCalledWith(3, pageRef);
+    expect(onPageChangeSpy).toHaveBeenCalledWith(3, pageRef, props.numberOfPages);
 
     expect(mockListener).not.toHaveBeenCalled();
   });

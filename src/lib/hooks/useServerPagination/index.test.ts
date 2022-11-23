@@ -1,67 +1,56 @@
 import { describe, it, expect } from 'vitest';
 import useServerPagination from '.';
 import { DUMMY_ITEMS, renderHook, setupServer } from '@/lib/test_setup';
-import { rest } from 'msw';
+import { Provider } from '@/lib';
 
 const itemsPerPage = 10;
-const initialPageNumber = 1;
-const numberOfPages = 20;
 const url = 'https://api';
-const searchParams = { page: 'page', perPage: 'per_page' };
 
 const server = setupServer(url);
 beforeAll(server.listen);
 afterAll(server.close);
 
+const queryFunction = async (page: number) => {
+  const data = await (await fetch(`${url}?page=${page}&per_page=10`)).json();
+  return data;
+};
+
 describe('useServerPagination', () => {
   it('should fetch and return the first 10 items with isLoading,isError, error and currentPageNumber states', async () => {
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useServerPagination<typeof DUMMY_ITEMS>({
-        url,
-        searchParams,
-        itemsPerPage,
-        numberOfPages,
-      }),
+    const { result, waitForNextUpdate } = renderHook(
+      () => useServerPagination<typeof DUMMY_ITEMS>({ queryFunction }),
+      { wrapper: Provider },
     );
-    const expected = DUMMY_ITEMS.slice(0, 10);
 
-    expect(result.current.isLoading).toBe(true);
+    const firstPageData = DUMMY_ITEMS.slice(0, 10);
+
+    expect(result.current.isFetching).toBe(true);
 
     await waitForNextUpdate();
 
-    expect(result.current.pageItems).toEqual(expected);
-    expect(result.current.currentPageNumber).toBe(initialPageNumber);
-    expect(result.current.isLoading).toBe(false);
+    expect(result.current.pageItems).toEqual(firstPageData);
+    expect(result.current.currentPageNumber).toBe(1);
+    expect(result.current.isFetching).toBe(false);
     expect(result.current.isError).toBe(false);
     expect(result.current.error).toBeNull();
-  });
 
-  it('should fetch another page when the page number change', async () => {
-    const changedPageNumber = 2;
+    // --------------------------------------------------------------
 
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useServerPagination<typeof DUMMY_ITEMS>({
-        url,
-        searchParams,
-        initialPageNumber: changedPageNumber,
-        itemsPerPage,
-        numberOfPages,
-      }),
-    );
+    // fetch second page
+    const secondPageNumber = 2;
+    result.current.handlePageChange(secondPageNumber, undefined);
 
-    result.current.handlePageChange(changedPageNumber, undefined);
-    expect(result.current.isLoading).toBe(true);
+    expect(result.current.isFetching).toBe(true);
 
     await waitForNextUpdate();
 
-    const start = (changedPageNumber - 1) * itemsPerPage;
-    const end = changedPageNumber * itemsPerPage;
+    const start = (secondPageNumber - 1) * itemsPerPage;
+    const end = secondPageNumber * itemsPerPage;
+    const secondPageData = DUMMY_ITEMS.slice(start, end);
 
-    const expected = DUMMY_ITEMS.slice(start, end);
-
-    expect(result.current.pageItems).toEqual(expected);
-    expect(result.current.currentPageNumber).toBe(2);
-    expect(result.current.isLoading).toBe(false);
+    expect(result.current.pageItems).toEqual(secondPageData);
+    expect(result.current.currentPageNumber).toBe(secondPageNumber);
+    expect(result.current.isFetching).toBe(false);
     expect(result.current.isError).toBe(false);
     expect(result.current.error).toBeNull();
   });

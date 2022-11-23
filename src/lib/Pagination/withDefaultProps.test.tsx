@@ -7,7 +7,7 @@ const numberOfPages = 6;
 
 const mockHandlePageChange = vi.fn(() => null);
 
-const pageContainer = { current: { children: [1, 2, 3, 4] } };
+const pageContainer = { current: { children: [1, 2, 3, 4, 5, 6] } };
 const getRef = (pageNumber: number) => getPageRef(pageContainer as never, pageNumber);
 
 describe('Pagination Component with default props', () => {
@@ -39,10 +39,11 @@ describe('Pagination Component with default props', () => {
     const nextButton = screen.getByText('❯');
     await userEvent.click(nextButton);
 
-    const CurrentPageNumber = currentPageNumber + 1;
-    const pageRef = getRef(CurrentPageNumber);
-
-    expect(mockHandlePageChange).toHaveBeenCalledWith(CurrentPageNumber, pageRef);
+    expect(mockHandlePageChange).toHaveBeenCalledWith(
+      currentPageNumber + 1,
+      getRef(currentPageNumber + 1),
+      numberOfPages,
+    );
   });
 
   it(`should invoke handlePageChange function with pageNumber = ${
@@ -51,13 +52,13 @@ describe('Pagination Component with default props', () => {
     const prevButton = screen.getByText('❮');
     await userEvent.click(prevButton);
 
-    expect(mockHandlePageChange).toHaveBeenCalledWith(2, getRef(2));
+    expect(mockHandlePageChange).toHaveBeenCalledWith(2, getRef(2), numberOfPages);
   });
 
   it('should invoke handlePageChange function with pageNumber = 5 when page "5" is clicked', async () => {
     const pageFive = screen.getByText(5);
     await userEvent.click(pageFive);
 
-    expect(mockHandlePageChange).toHaveBeenCalledWith(5, getRef(5));
+    expect(mockHandlePageChange).toHaveBeenCalledWith(5, getRef(5), numberOfPages);
   });
 });

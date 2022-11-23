@@ -1,48 +1,48 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { QueryStatus } from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
 import useFetch from '../useFetch';
 
-type FetchError = null | Error | { message: string };
-
-type Returns<PageItems extends any[]> = {
-  isLoading: boolean;
+type Returns<PageItems, Error> = {
+  isFetching: boolean;
   isError: boolean;
-  error: FetchError;
+  error: Error | null;
   pageItems: PageItems | undefined;
   currentPageNumber: number;
-  handlePageChange: (pageNumber: number, pageRef: HTMLSpanElement | undefined) => void;
+  handlePageChange: (
+    pageNumber: number,
+    pageRef: HTMLSpanElement | undefined,
+    numberOfPage: number,
+  ) => void;
+  status: QueryStatus;
 };
 
-type Parameters = {
-  url: string;
-  searchParams: Record<'page' | 'perPage', string>;
-  itemsPerPage: number;
-  numberOfPages: number;
+type Parameters<PageItems> = {
+  queryFunction: (pageNumber: number) => Promise<PageItems>;
   initialPageNumber?: number;
-  cacheEnabled?: boolean;
+  cacheTime?: number;
 };
 
-const useServerPagination = <PageItems extends any[]>({
-  url,
-  itemsPerPage,
-  searchParams: { page, perPage },
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const useServerPagination = <PageItems = any, Error = unknown>({
+  queryFunction,
   initialPageNumber = 1,
-  numberOfPages,
-  cacheEnabled = true,
-}: Parameters): Returns<PageItems> => {
+  cacheTime = 10_000,
+}: Parameters<PageItems>): Returns<PageItems, Error> => {
+  if (initialPageNumber <= 0) console.error('initial page Number must be greater than 0');
+
   const [currentPageNumber, setCurrentPageNumber] = useState(initialPageNumber);
-  const paginationUrl = new URL(url);
-  paginationUrl.searchParams.append(page, `${currentPageNumber}`);
-  paginationUrl.searchParams.append(perPage, `${itemsPerPage}`);
 
   const {
     data: pageItems,
     error,
     isError,
-    isLoading,
-  } = useFetch<PageItems>(paginationUrl.href, cacheEnabled);
+    isFetching,
+    status,
+  } = useFetch<PageItems, Error>({ queryFunction, pageNumber: currentPageNumber, cacheTime });
 
-  const handlePageChange = useCallback((pageNumber: number): void => {
+  const handlePageChange = useCallback<
+    (pageNumber: number, _: HTMLSpanElement, numberOfPages: number) => void
+  >((pageNumber, _, numberOfPages) => {
     const FIRST_PAGE_NUMBER = 1;
     const LAST_PAGE_NUMBER = numberOfPages;
 
@@ -55,12 +55,13 @@ const useServerPagination = <PageItems extends any[]>({
   }, []);
 
   return {
-    isLoading,
+    isFetching,
     isError,
     error,
     pageItems,
     currentPageNumber,
     handlePageChange,
+    status,
   };
 };
 

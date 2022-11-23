@@ -8,7 +8,11 @@ import './index.css';
 export type Props = {
   currentPageNumber: number;
   numberOfPages: number;
-  onPageChange: (pageNumber: number, pageRef: HTMLSpanElement | undefined) => void;
+  onPageChange: (
+    pageNumber: number,
+    pageRef: HTMLSpanElement | undefined,
+    numberOfPages: number,
+  ) => void;
   paginationContainerClass?: string;
   pagesContainerClass?: string;
   nextLabel?: string | JSXElementConstructor<Record<string, never>>;
@@ -45,7 +49,7 @@ const Pagination: FC<Props> = (props) => {
   const handlePageChange = useCallback((pageNumber: number): void => {
     const pageRef = getPageRef(pagesRef, pageNumber);
 
-    onPageChange(pageNumber, pageRef);
+    onPageChange(pageNumber, pageRef, numberOfPages);
     pageRef?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 

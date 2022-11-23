@@ -1,85 +1,33 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useRef, useState } from 'react';
+import { useQuery, type QueryStatus } from '@tanstack/react-query';
 
-type FetchError = null | Error | { message: string };
-
-type Returns<Data> = {
-  isLoading: boolean;
+type Returns<Data, Error> = {
+  isFetching: boolean;
   isError: boolean;
-  error: FetchError;
+  error: Error | null;
   data: Data | undefined;
+  status: QueryStatus;
 };
 
-type Url = string;
-
-type Cache = {
-  [key: Url]: any;
+type Parameters<Data> = {
+  queryFunction: (pageNumber: number) => Promise<Data>;
+  pageNumber: number;
+  cacheTime: number;
 };
 
-const cache: Cache = Object.create(null); // prototype-less object
-
-const useFetch = <Data>(url: Url, cacheEnabled: boolean): Returns<Data> => {
-  const [error, setError] = useState<FetchError>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<Data>();
-  const abortControllerRef = useRef<AbortController | null>(null);
-
-  const fetchData = async (url: string): Promise<void> => {
-    const controller = new AbortController();
-    abortControllerRef.current = controller;
-
-    try {
-      const cachedResponse = cache[url];
-
-      if (cachedResponse && cacheEnabled) {
-        setIsLoading(false);
-        setError(null);
-        return setData(cache[url]);
-      }
-
-      setIsLoading(true);
-      const response = await fetch(url, { signal: abortControllerRef.current.signal });
-      const parsedResponse: unknown = await response.json();
-
-      if (!isResponseOk<Data>(response, parsedResponse)) return Promise.reject(parsedResponse);
-
-      setError(null);
-
-      if (cacheEnabled) cache[url] = parsedResponse;
-
-      setData(parsedResponse);
-    } catch (err) {
-      if (err instanceof Error) return setError(err);
-
-      setError({ message: 'something went wrong!' });
-    } finally {
-      setIsLoading(false);
-      abortControllerRef.current = null;
-    }
-  };
-
-  useEffect(() => {
-    fetchData(url);
-
-    return () => {
-      setData(undefined);
-      abortControllerRef.current?.abort();
-    };
-  }, [url]);
+const useFetch = <Data, Error>({ queryFunction, pageNumber, cacheTime }: Parameters<Data>): Returns<Data, Error> => {
+  const { status, isFetching, data, error, isError } = useQuery<Data, Error>(
+    ['queryKey:', pageNumber],
+    () => queryFunction(pageNumber),
+    { keepPreviousData: true, staleTime: cacheTime },
+  );
 
   return {
-    isError: !!error,
-    isLoading: (isLoading || !data) && !error,
-    data,
+    isError,
     error,
+    isFetching: isFetching,
+    status,
+    data,
   };
 };
 
 export default useFetch;
-
-const isResponseOk = <Data>(
-  response: Response,
-  parsedResponse: unknown,
-): parsedResponse is Data => {
-  return response.ok;
-};

@@ -38,6 +38,9 @@
   "bugs": {
     "url": "https://github.com/amjed-98/react-ts-pagination/issues"
   },
+  "peerDependencies": {
+    "react": "^16 || ^17 || ^18"
+  },
   "scripts": {
     "demo": "vite",
     "build": "tsc && vite build",
@@ -49,12 +52,13 @@
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "devDependencies": {
+    "@tanstack/react-query": "4.16.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.4.3",
-    "@types/react": "^18.0.17",
-    "@types/react-dom": "^18.0.6",
+    "@types/react": "18.0.17",
+    "@types/react-dom": "8.0.6",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.40.1",
     "@vitejs/plugin-react": "^2.1.0",

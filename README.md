@@ -84,29 +84,26 @@ function App() {
 <br/>
 
 - ### With useServerPagination Hook:
-  **_Note:_ this hook is only used when your Api supports server pagination.**
+  **_Note:_ because this hook uses react query under the hood you must wrap you component with the provider to use this hook.**
 
 ```jsx
-import { Pagination, useServerPagination } from 'react-ts-pagination';
+import { Pagination, useServerPagination, Provider } from 'react-ts-pagination';
 import 'react-ts-pagination/styles.css';
 
 function App() {
-  const {
-    pageItems,
-    isLoading,
-    currentPageNumber,
-    handlePageChange
-  } = useServerPagination<Repo[]>({
-    url: 'https://api.github.com/orgs/GSG-G11/repos',
-    searchParams: { page: 'page', perPage: 'per_page' },
-    itemsPerPage: 5,
-    numberOfPages: 12,
-  });
 
+ const fetchData = async (page: number) => {
+    const data = await (await fetch(`https://api.github.com/orgs/GSG-G11/repos?page=${page}&per_page=10`)).json();
+    return data;
+  };
+
+  const { pageItems, isFetching, currentPageNumber, handlePageChange } = useServerPagination<Repo[]>({
+    queryFunction: fetchData,
+  });
 
   return (
        <div className='App'>
-      {isLoading ? (
+      {isFetching ? (
         <Skeleton />
       ) : (
         <Table tableHeaders={tableHeaders}>
@@ -130,6 +127,12 @@ function App() {
     </div>
   );
 }
+
+export default () => (
+  <Provider>
+    <App />
+  </Provider>
+);
 ```
 
 [![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/kind-payne-q4qhdh?file=%2Fsrc%2FApp.tsx&selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A24%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A24%7D%5D)
@@ -148,7 +151,7 @@ const ITEMS_PER_PAGE = 10;
 const numberOfPages = Math.ceil(items.length / ITEMS_PER_PAGE);
 
 function App() {
-  const [pageItems, setPageItems] = useState < typeof items > [];
+  const [pageItems, setPageItems] = useState<typeof items>[];
   const currentPageNumber = useRef(1);
 
   const handlePageChange = (pageNumber: number, pageRef: HTMLSpanElement | undefined) => {
@@ -229,23 +232,23 @@ function App() {
 
 ### Parameters: a single object Parameter with these props:
 
-| Name                | Type      | Description                                                                                                                                                                                                                                                |
-| ------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `url`               | `string`  | **Required:** The endpoint for your Api (without the search quries).                                                                                                                                                                                       |
-| `searchParams`      | `Object`  | **Required:** an object that contains The search queries for your Api. <br/> **page**: a string that tells the server which page number you want to retrieve. <br/> **perPage**: a string that tells the server how many items to retrieve for each page}` |
-| `initialPageNumber` | `Number`  | **Optional:** The initial page selected. <br/> Default is **1**                                                                                                                                                                                            |
-| `ItemsPerPage`      | `Number`  | **Required:** The number of items to display on each page. <br/> Default is **10**                                                                                                                                                                         |
-| `cacheEnabled`      | `Boolean` | **Optional:** enable responses to be cached <br/> Default is **true**                                                                                                                                                                                      |
+| Name                | Type       | Description                                                                                                                 |
+| ------------------- | ---------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `queryFunction`     | `Function` | **Required:** The function that the query will use to request data, it expects the page number to be passed as a parameter. |
+| `initialPageNumber` | `Number`   | **Optional:** The initial page selected. <br/> Default is **1**                                                             |
+| `cacheTime`         | `number`   | **Optional:** The time in **milliseconds** after data is considered stale <br/> Default is **10_000**
+<br/>
 
 ### Returns: an Object with these props:
 
-| Name                | Type      | Description                                                                                                 |
-| ------------------- | --------- | ----------------------------------------------------------------------------------------------------------- |
-| `isLoading`         | `Boolean` | A boolean that presents the state of of the request                                                         |
-| `isError`           | `Boolean` | A boolean that indicates if error accured or not while fetching the page.                                   |
-| `error`             | `object`  | A standard error object if an error accured while fetching pages.                                           |
-| `currentPageNumber` | `Number`  | The page number state                                                                                       |
-| `handlePageChange`  | `Funtion` | the handler function to handle changing pages, it expects pageNumber and pageRef to be passed as parameters |
+| Name                | Type       | Description                                                                                                 |
+| ------------------- | ---------- | ----------------------------------------------------------------------------------------------------------- |
+| `isFetching`        | `Boolean`  | A boolean that presents the state of of the request                                                         |
+| `status`            | `string`   | A string that presents the state of of the request(loading                                                  | success | error) |
+| `isError`           | `Boolean`  | A boolean that indicates if error occurred or not while fetching the page.                                  |
+| `error`             | `object`   | A standard error object if an error occurred while fetching pages.                                           |
+| `currentPageNumber` | `Number`   | The page number state                                                                                       |
+| `handlePageChange`  | `Function` | the handler function to handle changing pages, it expects pageNumber and pageRef to be passed as parameters |
 
 <br/>
 <br/>
