@@ -17,10 +17,9 @@ const queryFunction = async (page: number) => {
 
 describe('useServerPagination', () => {
   it('should fetch and return the first 10 items with isLoading,isError, error and currentPageNumber states', async () => {
-    const { result, waitForNextUpdate } = renderHook(
-      () => useServerPagination<typeof DUMMY_ITEMS>({ queryFunction }),
-      { wrapper: Provider },
-    );
+    const { result, waitForNextUpdate } = renderHook(() => useServerPagination<typeof DUMMY_ITEMS>({ queryFunction }), {
+      wrapper: Provider,
+    });
 
     const firstPageData = DUMMY_ITEMS.slice(0, 10);
 
@@ -38,7 +37,7 @@ describe('useServerPagination', () => {
 
     // fetch second page
     const secondPageNumber = 2;
-    result.current.handlePageChange(secondPageNumber, undefined);
+    result.current.handlePageChange(secondPageNumber, undefined, 10);
 
     expect(result.current.isFetching).toBe(true);
 
