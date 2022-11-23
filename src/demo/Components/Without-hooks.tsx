@@ -6,7 +6,7 @@ import Table from './Table';
 const ITEMS_PER_PAGE = 10;
 const numberOfPages = Math.ceil(items.length / ITEMS_PER_PAGE);
 
-function Without_usePagination_Hook() {
+function Without_Hooks() {
   const [pageItems, setPageItems] = useState<typeof items>([]);
   const currentPageNumber = useRef(1);
 
@@ -55,4 +55,4 @@ function Without_usePagination_Hook() {
   );
 }
 
-export default Without_usePagination_Hook;
+export default Without_Hooks;
