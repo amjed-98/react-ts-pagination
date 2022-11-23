@@ -8,11 +8,7 @@ type Returns<PageItems, Error> = {
   error: Error | null;
   pageItems: PageItems | undefined;
   currentPageNumber: number;
-  handlePageChange: (
-    pageNumber: number,
-    pageRef: HTMLSpanElement | undefined,
-    numberOfPage: number,
-  ) => void;
+  handlePageChange: (pageNumber: number, pageRef: HTMLSpanElement | undefined, numberOfPage: number) => void;
   status: QueryStatus;
 };
 
@@ -41,7 +37,7 @@ const useServerPagination = <PageItems = any, Error = unknown>({
   } = useFetch<PageItems, Error>({ queryFunction, pageNumber: currentPageNumber, cacheTime });
 
   const handlePageChange = useCallback<
-    (pageNumber: number, _: HTMLSpanElement, numberOfPages: number) => void
+    (pageNumber: number, _: HTMLSpanElement | undefined, numberOfPages: number) => void
   >((pageNumber, _, numberOfPages) => {
     const FIRST_PAGE_NUMBER = 1;
     const LAST_PAGE_NUMBER = numberOfPages;
