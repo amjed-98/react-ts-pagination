@@ -1,6 +1,5 @@
 import Pagination, { type Props } from '.';
 import { render, renderHook, screen, userEvent } from '@/lib/test_setup';
-import { listenFor } from '../utils';
 import { useState } from 'react';
 import { describe, expect, it, beforeEach } from 'vitest';
 
@@ -40,12 +39,7 @@ const {
   activePageStyle,
 } = props;
 
-const mockListener = vi.fn();
 const onPageChangeSpy = vi.spyOn(props, 'onPageChange');
-
-listenFor<number>('pageChange', ({ detail: pageNumber, type }) =>
-  mockListener({ pageNumber, type }),
-);
 
 describe('Pagination Component  with custom props', () => {
   beforeEach(() => {
@@ -58,7 +52,7 @@ describe('Pagination Component  with custom props', () => {
     expect(paginationElement).toMatchSnapshot();
   });
 
-  it(`should have ${paginationContainerClass} the  class`, () => {
+  it(`should have ${paginationContainerClass} class`, () => {
     const paginationElement = screen.getByRole('pagination');
 
     expect(paginationElement.className).toBe(paginationContainerClass);
@@ -72,21 +66,17 @@ describe('Pagination Component  with custom props', () => {
     await userEvent.click(nextButton);
     const pageRef = screen.getByText(5);
     expect(onPageChangeSpy).toHaveBeenCalledWith(5, pageRef, props.numberOfPages);
-
-    expect(mockListener).not.toHaveBeenCalled();
   });
 
   it(`should call onPageChange handler with pageNumber = ${
     currentPageNumber - 1
-  } and not dispatch pageChange event when prev button clicked`, async () => {
+  } when prev button clicked`, async () => {
     const prevButton = screen.getByText(prevLabel as string);
 
     await userEvent.click(prevButton);
     const pageRef = screen.getByText(3);
 
     expect(onPageChangeSpy).toHaveBeenCalledWith(3, pageRef, props.numberOfPages);
-
-    expect(mockListener).not.toHaveBeenCalled();
   });
 
   it(`should give ${nextBtnClass}, ${prevBtnClass} class to buttons`, () => {
