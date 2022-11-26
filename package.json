@@ -49,7 +49,8 @@
     "test:ui": "vitest --ui",
     "lint": "eslint --ext .tsx,.ts src",
     "lint:fix": "eslint --ext .tsx,.ts --fix src",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@tanstack/react-query": "4.16.1",
@@ -74,6 +75,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.2",
     "jsdom": "^20.0.1",
     "msw": "^0.47.4",
     "path": "^0.12.7",
