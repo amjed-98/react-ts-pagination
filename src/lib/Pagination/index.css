@@ -1,8 +1,8 @@
 #root {
-  --color: #A0A7B9;
+  --color: #a0a7b9;
   --hover-color: white;
   --background-color: transparent;
-  --hover-background-color: #8D00D8
+  --hover-background-color: #8d00d8;
 }
 
 .pagination {

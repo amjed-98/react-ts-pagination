@@ -22,11 +22,7 @@ function With_usePagination_Hook() {
         ))}
       </Table>
 
-      <Pagination
-        currentPageNumber={currentPageNumber}
-        numberOfPages={numberOfPages}
-        onPageChange={handlePageChange}
-      />
+      <Pagination currentPageNumber={currentPageNumber} numberOfPages={numberOfPages} onPageChange={handlePageChange} />
     </div>
   );
 }

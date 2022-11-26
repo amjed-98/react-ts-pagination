@@ -4,10 +4,7 @@ type CachedPages = Record<number, HTMLSpanElement | undefined>;
 
 let cachedPages: CachedPages;
 
-const getPageRef = (
-  containerRef: RefObject<HTMLDivElement>,
-  pageNumber: number,
-): HTMLSpanElement | undefined => {
+const getPageRef = (containerRef: RefObject<HTMLDivElement>, pageNumber: number): HTMLSpanElement | undefined => {
   if (!containerRef.current) return;
 
   if (!cachedPages) {

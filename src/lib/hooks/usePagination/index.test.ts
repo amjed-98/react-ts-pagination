@@ -25,9 +25,7 @@ describe('usePagination', () => {
     });
 
     it('should return the initialPageNumber as the currentPageNumber', () => {
-      const { result } = renderHook(() =>
-        usePagination({ items: DUMMY_ITEMS, initialPageNumber: 3 }),
-      );
+      const { result } = renderHook(() => usePagination({ items: DUMMY_ITEMS, initialPageNumber: 3 }));
       expect(result.current.currentPageNumber).toEqual(3);
     });
   });

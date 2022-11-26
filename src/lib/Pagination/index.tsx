@@ -8,11 +8,7 @@ import './index.css';
 export type Props = {
   currentPageNumber: number;
   numberOfPages: number;
-  onPageChange: (
-    pageNumber: number,
-    pageRef: HTMLSpanElement | undefined,
-    numberOfPages: number,
-  ) => void;
+  onPageChange: (pageNumber: number, pageRef: HTMLSpanElement | undefined, numberOfPages: number) => void;
   paginationContainerClass?: string;
   pagesContainerClass?: string;
   nextLabel?: string | JSXElementConstructor<Record<string, never>>;
@@ -55,11 +51,7 @@ const Pagination: FC<Props> = (props) => {
 
   return (
     <div className={paginationContainerClass} onWheel={handleMouseWheelScroll} role='pagination'>
-      <Button
-        Label={prevLabel}
-        className={prevBtnClass}
-        onClick={handlePageChange.bind(null, currentPageNumber - 1)}
-      />
+      <Button Label={prevLabel} className={prevBtnClass} onClick={handlePageChange.bind(null, currentPageNumber - 1)} />
 
       <Pages
         ref={pagesRef}
@@ -74,11 +66,7 @@ const Pagination: FC<Props> = (props) => {
         buildPageText={buildPageText}
       />
 
-      <Button
-        Label={nextLabel}
-        className={nextBtnClass}
-        onClick={handlePageChange.bind(null, currentPageNumber + 1)}
-      />
+      <Button Label={nextLabel} className={nextBtnClass} onClick={handlePageChange.bind(null, currentPageNumber + 1)} />
     </div>
   );
 };

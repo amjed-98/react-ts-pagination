@@ -21,8 +21,7 @@ const usePagination = <PageItem>({
   const numberOfPages = Math.ceil(items.length / itemsPerPage);
 
   if (initialPageNumber <= 0) console.error('initial page Number must be greater than 0');
-  if (initialPageNumber > numberOfPages)
-    console.error('initial page Number must be less than the number of pages');
+  if (initialPageNumber > numberOfPages) console.error('initial page Number must be less than the number of pages');
 
   const [pageItems, setPageItems] = useState<PageItem[]>([]);
   const currentPageNumber = useRef(initialPageNumber);
