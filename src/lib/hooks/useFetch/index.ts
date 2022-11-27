@@ -24,7 +24,7 @@ const useFetch = <Data, Error>({ queryFunction, pageNumber, cacheTime }: Paramet
   return {
     isError,
     error,
-    isFetching: isFetching,
+    isFetching,
     status,
     data,
   };

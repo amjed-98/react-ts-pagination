@@ -1,18 +1,6 @@
 import { setupServer, type SetupServerApi } from 'msw/node';
 import DUMMY_ITEMS from './DUMMY_ITEMS';
 import { rest } from 'msw';
-import { dispatchEvent } from '../utils';
-
-window.fetch = new Proxy(window.fetch, {
-  async apply(fetch, that, args: never) {
-    const result = fetch.apply(that, args);
-
-    const response = await result;
-    dispatchEvent('fetch', response);
-
-    return result;
-  },
-});
 
 const createServer = (endpoint: string): SetupServerApi => {
   return setupServer(
