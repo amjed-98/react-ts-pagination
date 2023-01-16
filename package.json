@@ -1,9 +1,11 @@
 {
   "name": "react-ts-pagination",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
+  "homepage": "https://github.com/amjed-98/react-ts-pagination#README.md",
   "author": "Amjad Yahia",
   "description": "A ReactJS Component that creates pagination in a declarative and simple way",
+  "readme": "README.md",
   "types": "./dist/react-pagination.es.d.ts",
   "license": "MIT",
   "files": [
