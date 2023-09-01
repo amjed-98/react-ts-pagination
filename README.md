@@ -4,6 +4,8 @@
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mui/material-ui/blob/HEAD/LICENSE)
 
+<a href="https://www.buymeacoffee.com/amjadYahia" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 **A React Component to render pagination in a simple and Declarative way.**
 
 By installing the package you'll have this default pagination look, but you can easilly overwrite it using your own classes and styles.
