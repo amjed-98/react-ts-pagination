@@ -4,7 +4,12 @@
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mui/material-ui/blob/HEAD/LICENSE)
 
-<a href="https://www.buymeacoffee.com/amjadYahia" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<div style="height: 35px !important;width: 100px !important;">
+<a href="https://www.buymeacoffee.com/amjadYahia" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"></a>
+</div>
+
+
+<br />
 
 **A React Component to render pagination in a simple and Declarative way.**
 
