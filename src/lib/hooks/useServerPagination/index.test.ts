@@ -7,7 +7,7 @@ const itemsPerPage = 10;
 const url = 'https://api';
 
 const server = setupServer(url);
-beforeAll(server.listen);
+beforeAll(() => server.listen());
 afterAll(server.close);
 
 const queryFunction = async (page: number) => {

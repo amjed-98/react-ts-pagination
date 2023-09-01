@@ -28,18 +28,20 @@ By installing the package you'll have this default pagination look, but you can 
 Install `react-ts-pagination `
 
 with [npm](https://www.npmjs.com/):
-
 ```sh
 npm install react-ts-pagination
-
 ```
 
 with [yarn](https://yarnpkg.com/):
-
 ```sh
 yarn add react-ts-pagination
-
 ```
+
+with [pnpm](https://pnpm.io/):
+```sh
+pnpm install react-ts-pagination
+```
+
 
 ## Usage
 
@@ -289,13 +291,13 @@ cd react-ts-pagination
 Install dependencies:
 
 ```sh
-npm install | yarn
+npm install | yarn | pnpm install
 ```
 
 preview the Demo
 
 ```sh
-npm run demo | yarn demo
+npm run demo | yarn demo | pnpm demo
 ```
 
 Open your browser and go to [http://127.0.0.1:5173/src/demo/index.html](http://127.0.0.1:5173/src/demo/index.html)
@@ -308,11 +310,11 @@ Open your browser and go to [http://127.0.0.1:5173/src/demo/index.html](http://1
 Run the tests
 
 ```sh
-npm run test | yarn test
+npm run test | yarn test | pnpm test
 ```
 
 Run the tests in the browser with nice UI presentation
 
 ```sh
-npm run test:ui | yarn test:ui
+npm run test:ui | yarn test:ui | pnpm test:ui
 ```

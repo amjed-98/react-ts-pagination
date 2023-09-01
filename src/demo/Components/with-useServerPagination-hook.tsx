@@ -116,7 +116,7 @@ interface Repo {
   has_wiki: boolean;
   has_pages: boolean;
   forks_count: number;
-  mirror_url?: any;
+  mirror_url?: unknown;
   archived: boolean;
   disabled: boolean;
   open_issues_count: number;
@@ -124,7 +124,7 @@ interface Repo {
   allow_forking: boolean;
   is_template: boolean;
   web_commit_signoff_required: boolean;
-  topics: any[];
+  topics: unknown[];
   visibility: string;
   forks: number;
   open_issues: number;
